@@ -33,4 +33,11 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
     }
+
+
+
+    fun onRemoveList(list: ShoppingList){
+        viewModel.removeList(list)
+    }
+
 }
