@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 data class ShoppingList(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="List_Key")
-    val listKey: Int,
+    val listKey: Int=0,
     @ColumnInfo(name = "Name")
     val name: String){}
 
@@ -25,13 +25,13 @@ data class ShoppingItems(
     val quantity :String,
 
     @ColumnInfo(name = "unit")
-    val unit:String,
+    val unit:String = "",
 
     @ColumnInfo(name="list_key")
     val shoppingList: Int,
 
     @ColumnInfo(name= "done")
-    val done: Boolean
+    val done: Boolean = false
 )
 
 @Entity(tableName = "Shop")
