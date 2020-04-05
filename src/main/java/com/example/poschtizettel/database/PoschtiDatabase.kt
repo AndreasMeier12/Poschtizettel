@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [ShoppingList::class], version = 1, exportSchema = false)
 abstract class PoschtiDatabase : RoomDatabase() {
 
-    abstract val sleepDatabaseDao: PoschtiDatabaseDao
+    abstract val poschtiDatabaseDao: PoschtiDatabaseDao
 
     companion object {
 
