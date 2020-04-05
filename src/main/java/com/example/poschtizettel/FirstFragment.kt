@@ -36,8 +36,6 @@ class FirstFragment : Fragment() {
 
 
 
-    fun onRemoveList(list: ShoppingList){
-        viewModel.removeList(list)
-    }
+
 
 }

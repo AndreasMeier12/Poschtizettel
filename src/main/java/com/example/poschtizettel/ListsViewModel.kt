@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ListsViewModel : ViewModel() {
-    private val _shoppingLists: MutableLiveData<MutableList<ShoppingList>> = MutableLiveData()
-    get() {return field
-    }
+
 
     init {
         Log.i("ListViewModel", "init")
@@ -15,16 +13,6 @@ class ListsViewModel : ViewModel() {
 
 
 
-
-    fun addList(newList: ShoppingList){
-        _shoppingLists.value?.add(newList)
-        Log.i("ListViewModel", "List created")
-    }
-
-    fun removeList(deleteList: ShoppingList){
-        _shoppingLists.value?.remove(deleteList)
-
-    }
 
 
 

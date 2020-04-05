@@ -47,15 +47,3 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
-data class ShoppingList(var name: String, var items: Collection<ShoppingItem> = listOf()) {
-}
-
-data class ShoppingItem(
-    var name: String,
-    var quantity: Int = 1,
-    var unit: String = "",
-    var shop: String = ""
-) {
-
-}
