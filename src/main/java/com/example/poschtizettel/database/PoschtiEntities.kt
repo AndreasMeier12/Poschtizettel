@@ -16,7 +16,7 @@ data class ShoppingList(
 @Entity(tableName = "Shopping_Items")
 data class ShoppingItems(
     @PrimaryKey(autoGenerate = true)
-    var key:Int,
+    var item_key:Int,
 
     @ColumnInfo(name = "name")
     val name: String,
