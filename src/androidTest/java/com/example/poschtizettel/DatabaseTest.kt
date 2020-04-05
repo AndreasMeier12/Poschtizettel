@@ -124,8 +124,11 @@ class DatabaseTest {
     fun deleteItem(){
         val listName = "testlist"
         val myList = ShoppingList(name = listName)
-        val listKey = myList.listKey + 1
         val listNum = dbDAO.insertList(myList)
+
+        val lists = dbDAO.getAllLists()
+        var listKey = 0
+        if(lists != null){listKey = lists.get(0).listKey}
         val lentils = ShoppingItems(name = "lentils", shoppingList = listKey, quantity = "1")
         dbDAO.insertItem(lentils)
         val rum = ShoppingItems(name = "rum", shoppingList = listKey, quantity = "1")
