@@ -12,7 +12,7 @@ data class ShoppingList(
     @ColumnInfo(name = "Name")
     val name: String){}
 
-@Entity(tableName = "Shopping_Items")
+@Entity(tableName = "Shopping_Items", foreignKeys = arrayOf(ForeignKey(entity = ShoppingList::class, parentColumns = arrayOf("List_Key"), childColumns = arrayOf("list_key"), onDelete = CASCADE)))
 data class ShoppingItems(
     @PrimaryKey(autoGenerate = true)
     var item_key:Int = 0,

@@ -69,20 +69,6 @@ class DatabaseTest {
     }
 
 
-    @Test
-    @Throws(Exception::class)
-    fun insertAndDeleteList(){
-        val listName = "testlist"
-        val myList = ShoppingList(name = listName)
-        val key = myList.listKey+1
-        Log.i("TestDB", "key inserted ${key}")
-        dbDAO.insertList(myList)
-        dbDAO.deleteList(myList)
-        val retrieved = dbDAO.getList(key)
-        assertNull(retrieved)
-    }
-
-
     @Test(expected = SQLiteConstraintException::class)
     fun testCannotNameMultipleTimes(){
         val listName = "testlist"
@@ -117,6 +103,31 @@ class DatabaseTest {
         dbDAO.insertItem(ShoppingItems(name = "barley", shoppingList = listKey, quantity = "1"))
         val items = dbDAO.getAllItemsOfList(listKey)
         assertEquals(items?.size, 4)
+    }
+
+    @Test
+    fun deleteList(){
+        val listName = "testlist"
+        val myList = ShoppingList(name = listName)
+        val listNum = dbDAO.insertList(myList)
+        val lists = dbDAO.getAllLists()
+        var listKey = 0
+        if(lists != null){listKey = lists.get(0).listKey}
+        val lentils = ShoppingItems(name = "lentils", shoppingList = listKey, quantity = "1")
+        dbDAO.insertItem(lentils)
+        val rum = ShoppingItems(name = "rum", shoppingList = listKey, quantity = "1")
+        dbDAO.insertItem(rum)
+        val electrons = ShoppingItems(name = "electrons", shoppingList = listKey, quantity = "6e23")
+        dbDAO.insertItem(electrons)
+        val barley = ShoppingItems (name = "barley", shoppingList = listKey, quantity = "1")
+        dbDAO.insertItem(barley)
+        dbDAO.deleteList(listKey)
+        val newLists = dbDAO.getAllLists()
+        val newItems = dbDAO.getAllItems()
+        assertEquals(newLists?.size, 0)
+        assertEquals(newItems?.size, 0)
+
+
     }
 
 
