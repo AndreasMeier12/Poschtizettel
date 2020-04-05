@@ -69,6 +69,20 @@ class DatabaseTest {
     }
 
 
+    @Test
+    @Throws(Exception::class)
+    fun insertAndDeleteList(){
+        val listName = "testlist"
+        val myList = ShoppingList(name = listName)
+        val key = myList.listKey+1
+        Log.i("TestDB", "key inserted ${key}")
+        dbDAO.insertList(myList)
+        dbDAO.deleteList(myList)
+        val retrieved = dbDAO.getList(key)
+        assertNull(retrieved)
+    }
+
+
     @Test(expected = SQLiteConstraintException::class)
     fun testCannotNameMultipleTimes(){
         val listName = "testlist"

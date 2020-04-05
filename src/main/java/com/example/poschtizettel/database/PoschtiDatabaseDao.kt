@@ -1,9 +1,6 @@
 package com.example.poschtizettel.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 @Dao
 interface PoschtiDatabaseDao{
@@ -13,6 +10,12 @@ interface PoschtiDatabaseDao{
 
     @Insert
     fun insertItem(item: ShoppingItems)
+
+    @Delete
+    fun deleteList(list: ShoppingList)
+
+    @Delete
+    fun deleteItem(item: ShoppingItems)
 
     @Update
     fun updateList(list:ShoppingList)
