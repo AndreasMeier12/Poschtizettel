@@ -32,6 +32,11 @@ interface PoschtiDatabaseDao{
     @Query("SELECT * from shopping_lists")
     fun getAllLists(): List<ShoppingList>?
 
+    @Query("SELECT * from shopping_items")
+    fun getAllItems(): List<ShoppingItems>?
+
+    @Query("SELECT * from shopping_items WHERE list_key = :key")
+    fun getAllItemsOfList(key: Int): List<ShoppingItems>?
 
 
 }

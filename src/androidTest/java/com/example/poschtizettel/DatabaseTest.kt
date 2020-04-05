@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.poschtizettel.database.PoschtiDatabase
 import com.example.poschtizettel.database.PoschtiDatabaseDao
+import com.example.poschtizettel.database.ShoppingItems
 import com.example.poschtizettel.database.ShoppingList
 import org.junit.After
 import org.junit.Test
@@ -77,6 +78,31 @@ class DatabaseTest {
         val dbLists = dbDAO.getAllLists()
         assertEquals(dbLists?.size, 1)
 
+    }
+
+    @Test(expected = SQLiteConstraintException::class)
+    fun testInsertMultipleLists(){
+        val listName = "testlist"
+        for (i in 1..15){
+            dbDAO.insertList(ShoppingList(name = "%{listName}%{i}"))
+        }
+        val dbLists = dbDAO.getAllLists()
+        assertEquals(dbLists?.size, 15)
+
+    }
+
+    @Test
+    fun addItemsToList(){
+        val listName = "testlist"
+        val myList = ShoppingList(name = listName)
+        val listKey = myList.listKey+1
+        dbDAO.insertList(myList)
+        dbDAO.insertItem(ShoppingItems(name = "lentils", shoppingList = listKey, quantity = "1"))
+        dbDAO.insertItem(ShoppingItems(name = "rum", shoppingList = listKey, quantity = "1"))
+        dbDAO.insertItem(ShoppingItems(name = "electrons", shoppingList = listKey, quantity = "6e23"))
+        dbDAO.insertItem(ShoppingItems(name = "barley", shoppingList = listKey, quantity = "1"))
+        val items = dbDAO.getAllItemsOfList(listKey)
+        assertEquals(items?.size, 4)
     }
 
 }
