@@ -8,14 +8,14 @@ import org.jetbrains.annotations.NotNull
 data class ShoppingList(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="List_Key")
-    val listKey: Int=0,
+    val listKey: Int=1,
     @ColumnInfo(name = "Name")
     val name: String){}
 
 @Entity(tableName = "Shopping_Items", foreignKeys = arrayOf(ForeignKey(entity = ShoppingList::class, parentColumns = arrayOf("List_Key"), childColumns = arrayOf("list_key"), onDelete = CASCADE)))
 data class ShoppingItems(
     @PrimaryKey(autoGenerate = true)
-    var item_key:Int = 0,
+    var item_key:Int = 1,
 
     @ColumnInfo(name = "name")
     val name: String,
