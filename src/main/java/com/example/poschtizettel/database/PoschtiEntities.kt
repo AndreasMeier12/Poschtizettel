@@ -1,11 +1,8 @@
 package com.example.poschtizettel.database
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 
-@Entity(tableName = "shopping_lists")
+@Entity(tableName = "shopping_lists", indices = [Index(value = ["Name"], unique = true)])
 data class ShoppingList(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="List_Key")

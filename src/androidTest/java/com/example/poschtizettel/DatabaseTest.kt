@@ -1,5 +1,6 @@
 package com.example.poschtizettel
 
+import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -64,6 +65,18 @@ class DatabaseTest {
         val retrieved = dbDAO.getList(key)
         assertNotNull(retrieved)
         assertEquals(retrieved?.name, listName)
+    }
+
+
+    @Test(expected = SQLiteConstraintException::class)
+    fun testCannotNameMultipleTimes(){
+        val listName = "testlist"
+        for (i in 1..15){
+            dbDAO.insertList(ShoppingList(name = listName))
+        }
+        val dbLists = dbDAO.getAllLists()
+        assertEquals(dbLists?.size, 1)
+
     }
 
 }
