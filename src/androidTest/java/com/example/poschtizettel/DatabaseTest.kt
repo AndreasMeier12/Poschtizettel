@@ -126,8 +126,35 @@ class DatabaseTest {
         val newItems = dbDAO.getAllItems()
         assertEquals(newLists?.size, 0)
         assertEquals(newItems?.size, 0)
+    }
 
+    @Test
+    fun deleteOneListOfMultiple(){
+        val listName = "testlist"
+        val listName2 = "differentList"
+        val listName3 = "evenmoredifferentlist"
 
+        val myList = ShoppingList(name = listName)
+        val listNum = dbDAO.insertList(myList)
+        val lists = dbDAO.getAllLists()
+        var listKey = 0
+        if(lists != null){listKey = lists.get(0).listKey}
+        dbDAO.insertList(ShoppingList(name = listName2))
+        dbDAO.insertList(ShoppingList(name = listName3))
+
+        val lentils = ShoppingItems(name = "lentils", shoppingList = listKey, quantity = "1")
+        dbDAO.insertItem(lentils)
+        val rum = ShoppingItems(name = "rum", shoppingList = 2, quantity = "1")
+        dbDAO.insertItem(rum)
+        val electrons = ShoppingItems(name = "electrons", shoppingList = 2, quantity = "6e23")
+        dbDAO.insertItem(electrons)
+        val barley = ShoppingItems (name = "barley", shoppingList = 3, quantity = "1")
+        dbDAO.insertItem(barley)
+        dbDAO.deleteList(listKey)
+        val newLists = dbDAO.getAllLists()
+        val newItems = dbDAO.getAllItems()
+        assertEquals(newLists?.size, 2)
+        assertEquals(newItems?.size, 3)
     }
 
 
