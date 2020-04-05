@@ -17,6 +17,9 @@ interface PoschtiDatabaseDao{
     @Delete
     fun deleteItem(item: ShoppingItems)
 
+    @Query("DELETE  FROM shopping_items WHERE item_key = :key")
+    fun deleteItem(key: Int)
+
     @Update
     fun updateList(list:ShoppingList)
 

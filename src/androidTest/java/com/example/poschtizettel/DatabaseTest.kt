@@ -119,4 +119,29 @@ class DatabaseTest {
         assertEquals(items?.size, 4)
     }
 
+
+    @Test
+    fun deleteItem(){
+        val listName = "testlist"
+        val myList = ShoppingList(name = listName)
+        val listKey = myList.listKey + 1
+        val listNum = dbDAO.insertList(myList)
+        val lentils = ShoppingItems(name = "lentils", shoppingList = listKey, quantity = "1")
+        dbDAO.insertItem(lentils)
+        val rum = ShoppingItems(name = "rum", shoppingList = listKey, quantity = "1")
+        dbDAO.insertItem(rum)
+        val electrons = ShoppingItems(name = "electrons", shoppingList = listKey, quantity = "6e23")
+        dbDAO.insertItem(electrons)
+        val barley = ShoppingItems (name = "barley", shoppingList = listKey, quantity = "1")
+        dbDAO.insertItem(barley)
+
+        val asdf = dbDAO.getItem(1)
+
+        if (asdf != null) {
+            dbDAO.deleteItem(asdf)
+        }
+        val items = dbDAO.getAllItemsOfList(listKey)
+        assertEquals(3, items?.size)
+    }
+
 }
