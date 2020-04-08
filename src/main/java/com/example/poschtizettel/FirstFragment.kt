@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.poschtizettel.database.PoschtiDatabase
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -22,7 +23,13 @@ class FirstFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val viewModel = ViewModelProvider(this).get(ListsViewModel::class.java)
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = PoschtiDatabase.getInstance(application).poschtiDatabaseDao
+
+        val viewModelFactory = ListsViewModelFactory(dataSource, application)
+
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(ListsViewModel::class.java)
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 

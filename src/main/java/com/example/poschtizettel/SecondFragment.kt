@@ -28,9 +28,12 @@ class SecondFragment : Fragment() {
     ): View? {
 
         val application = requireNotNull(this.activity).application
-        val dataSource = PoschtiDatabase.getInstance(application)
-        // Inflate the layout for this fragment
-        val viewModel = ViewModelProvider(this).get(ListsViewModel::class.java)
+
+        val dataSource = PoschtiDatabase.getInstance(application).poschtiDatabaseDao
+
+        val viewModelFactory = ListsViewModelFactory(dataSource, application)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ListsViewModel::class.java)
         return inflater.inflate(R.layout.fragment_second, container, false)
     }
 
@@ -45,6 +48,7 @@ class SecondFragment : Fragment() {
             val dataSource = PoschtiDatabase.getInstance(application)
             val textField = view.findViewById<TextInputEditText>(R.id.textInputEdit_addList)
             val asdf = textField.text.toString()
+            viewModel.addList(asdf)
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
 
