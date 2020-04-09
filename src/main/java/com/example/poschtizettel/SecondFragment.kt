@@ -1,7 +1,6 @@
 package com.example.poschtizettel
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.poschtizettel.database.PoschtiDatabase
-import com.example.poschtizettel.database.ShoppingList
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
