@@ -20,7 +20,7 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
         Log.i("ListViewModel", "init")
     }
 
-    fun addList(name: String) {
+    fun onAddList(name: String) {
         uiScope.launch {
             insertList(name)
             Log.i("ListsViewModel","List $name added")

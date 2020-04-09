@@ -48,7 +48,7 @@ class SecondFragment : Fragment() {
             val dataSource = PoschtiDatabase.getInstance(application)
             val textField = view.findViewById<TextInputEditText>(R.id.textInputEdit_addList)
             val asdf = textField.text.toString()
-            viewModel.addList(asdf)
+            viewModel.onAddList(asdf)
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
 
