@@ -7,10 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.poschtizettel.database.PoschtiDatabaseDao
 import com.example.poschtizettel.database.ShoppingList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Application) :
     AndroidViewModel(application) {
@@ -25,11 +22,17 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     fun addList(name: String) {
         uiScope.launch {
-            databaseDao.insertList(ShoppingList(name = name))
+            insertList(name)
             Log.i("ListsViewModel","List $name added")
 
         }
 
+    }
+
+    suspend fun insertList(name: String){
+        withContext(Dispatchers.IO){
+            databaseDao.insertList(ShoppingList(name = name))
+        }
     }
 
 
