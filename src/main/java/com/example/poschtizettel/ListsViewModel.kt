@@ -2,9 +2,7 @@ package com.example.poschtizettel
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.poschtizettel.database.PoschtiDatabaseDao
 import com.example.poschtizettel.database.ShoppingItems
 import com.example.poschtizettel.database.ShoppingList
@@ -16,7 +14,10 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-
+    private val lists = getLiveLists()
+    val listsString = Transformations.map(lists) { lists ->
+        formatShoppingLists(lists)
+    }
     init {
         Log.i("ListViewModel", "init")
     }
@@ -30,8 +31,9 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     }
 
+
     suspend fun insertList(name: String){
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             databaseDao.insertList(ShoppingList(name = name))
         }
     }
@@ -50,5 +52,10 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
         }
     }
 
+    fun getLiveLists() : LiveData<List<ShoppingList>> {
+        val asdf = databaseDao.getAllListsLive()
+        return asdf
+
+        }
 
 }

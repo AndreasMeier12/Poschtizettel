@@ -1,5 +1,6 @@
 package com.example.poschtizettel.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
@@ -41,13 +42,16 @@ interface PoschtiDatabaseDao{
 
 
     @Query("SELECT * from shopping_lists")
-    fun getAllLists(): List<ShoppingList>?
+    fun getAllLists(): List<ShoppingList>
+
+    @Query("SELECT * from shopping_lists")
+    fun getAllListsLive(): LiveData<List<ShoppingList>>
 
     @Query("SELECT * from shopping_items")
-    fun getAllItems(): List<ShoppingItems>?
+    fun getAllItems(): List<ShoppingItems>
 
     @Query("SELECT * from shopping_items WHERE list_key = :key")
-    fun getAllItemsOfList(key: Int): List<ShoppingItems>?
+    fun getAllItemsOfList(key: Int): List<ShoppingItems>
 
 
 }
