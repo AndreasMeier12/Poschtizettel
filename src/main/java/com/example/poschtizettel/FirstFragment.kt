@@ -29,7 +29,7 @@ class FirstFragment : Fragment() {
 
         val viewModelFactory = ListsViewModelFactory(dataSource, application)
 
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(ListsViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ListsViewModel::class.java)
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
