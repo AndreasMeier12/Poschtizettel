@@ -152,6 +152,7 @@ class DatabaseTest {
         dbDAO.insertItem(barley)
         dbDAO.deleteList(listKey)
         val newLists = dbDAO.getAllLists()
+        val liveLists = dbDAO.getAllListsLive().value
         val newItems = dbDAO.getAllItems()
         assertEquals(newLists?.size, 2)
         assertEquals(newItems?.size, 3)

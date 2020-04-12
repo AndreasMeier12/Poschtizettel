@@ -14,7 +14,7 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private val lists = getLiveLists()
+    val lists = getLiveLists()
     val listsString = Transformations.map(lists) { lists ->
         formatShoppingLists(lists)
     }
@@ -35,6 +35,9 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
     suspend fun insertList(name: String){
         withContext(Dispatchers.IO) {
             databaseDao.insertList(ShoppingList(name = name))
+            val asdf = databaseDao.getAllLists()
+            val fsda = databaseDao.getList(0)
+            Log.i("Coroutine", fsda.toString())
         }
     }
 
@@ -46,6 +49,12 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
         }
     }
 
+    fun onGetLists(){}
+
+    suspend fun getLists(){
+
+    }
+
     suspend fun insertItem(listNum: Int, name: String){
         withContext(Dispatchers.IO){
             databaseDao.insertItem(ShoppingItems(name = name, shoppingList = listNum, quantity = "", unit = ""))
@@ -54,8 +63,11 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     fun getLiveLists() : LiveData<List<ShoppingList>> {
         val asdf = databaseDao.getAllListsLive()
+        val fsda = asdf.value
+        Log.i("ListViewModel", "lists: $fsda")
         return asdf
 
         }
+
 
 }
