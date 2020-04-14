@@ -93,5 +93,15 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
         databaseDao.getAllLists()
     }
 
+    fun deleteList(key: Int){
+        runBlocking {
+            deleteListCoroutine(key)
+        }
+    }
+
+    private suspend fun deleteListCoroutine(key: Int) = withContext(Dispatchers.IO){
+        databaseDao.deleteList(key)
+    }
+
 
 }

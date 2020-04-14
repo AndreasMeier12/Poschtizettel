@@ -5,11 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.example.poschtizettel.database.PoschtiDatabase
 import com.example.poschtizettel.database.ShoppingList
 
 
-class ShoppingListAdapter(private val shoppingLists: List<ShoppingList>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ShoppingListAdapter(private val shoppingLists: List<ShoppingList>, private val viewModel: ListsViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
@@ -28,6 +30,8 @@ class ShoppingListAdapter(private val shoppingLists: List<ShoppingList>) : Recyc
         val inflater = LayoutInflater.from(context)
         val listView = inflater.inflate(R.layout.item_list, parent, false)
         val viewHolder = ViewHolder(itemView = listView)
+
+
         return viewHolder
     }
 
@@ -48,6 +52,9 @@ class ShoppingListAdapter(private val shoppingLists: List<ShoppingList>) : Recyc
         val button: Button = holder.messageButton
         button.text = "Delete"
         textView.text = currentList.name
+        button.setOnClickListener {
+            viewModel.deleteList(currentList.listKey)
+        }
     }
 
 }
