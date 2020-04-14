@@ -11,7 +11,7 @@ import com.example.poschtizettel.database.PoschtiDatabase
 import com.example.poschtizettel.database.ShoppingList
 
 
-class ShoppingListAdapter(private val shoppingLists: List<ShoppingList>, private val viewModel: ListsViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ShoppingListAdapter(private var shoppingLists: MutableList<ShoppingList>, private val viewModel: ListsViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
@@ -53,8 +53,16 @@ class ShoppingListAdapter(private val shoppingLists: List<ShoppingList>, private
         button.text = "Delete"
         textView.text = currentList.name
         button.setOnClickListener {
+            removeAt(position)
             viewModel.deleteList(currentList.listKey)
         }
+    }
+
+    fun removeAt(position: Int){
+        shoppingLists.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, shoppingLists.size)
+
     }
 
 }
