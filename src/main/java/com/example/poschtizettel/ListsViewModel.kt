@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.poschtizettel.database.PoschtiDatabaseDao
+import com.example.poschtizettel.database.Shop
 import com.example.poschtizettel.database.ShoppingItems
 import com.example.poschtizettel.database.ShoppingList
 import kotlinx.coroutines.*
@@ -69,7 +70,12 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
         }
 
-    fun getDasLists(){
+    fun getDasLists() : List<ShoppingList> {
+        var res: List<ShoppingList> = listOf()
+        runBlocking {
+            res = async { getDasListsForRealsies() }.await()
+        }
+        return res
 
 
     }

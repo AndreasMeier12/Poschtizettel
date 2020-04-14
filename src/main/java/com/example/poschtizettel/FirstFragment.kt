@@ -80,20 +80,24 @@ class FirstFragment : Fragment() {
         viewModel.lists.observe(viewLifecycleOwner, Observer { lists ->
             Log.i("FirstFragment", "list length ${lists.size}")
         })
-        GlobalScope.launch {
-            val versace = viewModel.getDasListsForRealsies()
+        val asdf = this
             Log.i("First", "asdf")
 
-        }
 
 
-        view.findViewById<TextView>(R.id.textview_first).setText(viewModel.listsString.value.toString())
-        var textView = view.findViewById<TextView>(R.id.textview_first)
-        val dummyLists = listOf<ShoppingList>(ShoppingList(name = "asdf", listKey = 1), ShoppingList(name = "sdfa", listKey = 2))
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-        val adapter = ShoppingListAdapter(dummyLists)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
+
+            view.findViewById<TextView>(R.id.textview_first)
+                .setText(viewModel.listsString.value.toString())
+            var textView = view.findViewById<TextView>(R.id.textview_first)
+            val dummyLists = listOf<ShoppingList>(
+                ShoppingList(name = "asdf", listKey = 1),
+                ShoppingList(name = "sdfa", listKey = 2)
+            )
+            val dasLists = viewModel.getDasLists()
+            val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+            val adapter = ShoppingListAdapter(dasLists)
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(asdf.context)
 
 
 
