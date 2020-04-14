@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.poschtizettel.database.PoschtiDatabase
 import com.example.poschtizettel.database.ShoppingList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -29,13 +32,6 @@ class FirstFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        var textView = view?.findViewById<TextView>(R.id.textview_first)
-        val dummyLists = listOf<ShoppingList>(ShoppingList(name = "asdf", listKey = 1), ShoppingList(name = "sdfa", listKey = 2))
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)
-        val adapter = ShoppingListAdapter(dummyLists)
-        recyclerView?.adapter = adapter
-        recyclerView?.layoutManager = LinearLayoutManager(this.context)
 
 
 
@@ -74,6 +70,23 @@ class FirstFragment : Fragment() {
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+        val listsObserver = Observer<List<ShoppingList>> { newName ->
+            // Update the UI, in this case, a TextView.
+            lists = newName
+
+
+        }
+
+        viewModel.lists.observe(viewLifecycleOwner, Observer { lists ->
+            Log.i("FirstFragment", "list length ${lists.size}")
+        })
+        GlobalScope.launch {
+            val versace = viewModel.getDasListsForRealsies()
+            Log.i("First", "asdf")
+
+        }
+
+
         view.findViewById<TextView>(R.id.textview_first).setText(viewModel.listsString.value.toString())
         var textView = view.findViewById<TextView>(R.id.textview_first)
         val dummyLists = listOf<ShoppingList>(ShoppingList(name = "asdf", listKey = 1), ShoppingList(name = "sdfa", listKey = 2))
@@ -81,6 +94,7 @@ class FirstFragment : Fragment() {
         val adapter = ShoppingListAdapter(dummyLists)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
+
 
 
     }

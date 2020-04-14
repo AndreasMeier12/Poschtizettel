@@ -69,5 +69,15 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
         }
 
+    fun getDasLists(){
+
+
+    }
+
+
+    suspend  fun getDasListsForRealsies() = withContext(Dispatchers.IO) {
+         databaseDao.getAllLists()
+    }
+
 
 }
