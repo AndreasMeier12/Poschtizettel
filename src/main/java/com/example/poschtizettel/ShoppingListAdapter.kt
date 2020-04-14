@@ -26,7 +26,7 @@ class ShoppingListAdapter(private val shoppingLists: List<ShoppingList>) : Recyc
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
-        val listView = inflater.inflate(R.layout.item_shopping_list_layout, parent)
+        val listView = inflater.inflate(R.layout.item_list, parent, false)
         val viewHolder = ViewHolder(itemView = listView)
         return viewHolder
     }
@@ -47,6 +47,7 @@ class ShoppingListAdapter(private val shoppingLists: List<ShoppingList>) : Recyc
         var textView = holder.nameTextView
         val button: Button = holder.messageButton
         button.text = "Delete"
+        textView.text = currentList.name
     }
 
 }

@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.poschtizettel.database.PoschtiDatabase
 import com.example.poschtizettel.database.ShoppingList
 
@@ -28,7 +31,11 @@ class FirstFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         var textView = view?.findViewById<TextView>(R.id.textview_first)
-
+        val dummyLists = listOf<ShoppingList>(ShoppingList(name = "asdf", listKey = 1), ShoppingList(name = "sdfa", listKey = 2))
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)
+        val adapter = ShoppingListAdapter(dummyLists)
+        recyclerView?.adapter = adapter
+        recyclerView?.layoutManager = LinearLayoutManager(this.context)
 
 
 
@@ -68,7 +75,12 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
         view.findViewById<TextView>(R.id.textview_first).setText(viewModel.listsString.value.toString())
-
+        var textView = view.findViewById<TextView>(R.id.textview_first)
+        val dummyLists = listOf<ShoppingList>(ShoppingList(name = "asdf", listKey = 1), ShoppingList(name = "sdfa", listKey = 2))
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        val adapter = ShoppingListAdapter(dummyLists)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
 
 
     }
