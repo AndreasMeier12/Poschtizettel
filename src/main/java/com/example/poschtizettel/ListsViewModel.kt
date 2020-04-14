@@ -19,6 +19,7 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
     val listsString = Transformations.map(lists) { lists ->
         formatShoppingLists(lists)
     }
+
     init {
         Log.i("ListViewModel", "init")
     }
@@ -26,14 +27,14 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
     fun onAddList(name: String) {
         uiScope.launch {
             insertList(name)
-            Log.i("ListsViewModel","List $name added")
+            Log.i("ListsViewModel", "List $name added")
 
         }
 
     }
 
 
-    suspend fun insertList(name: String){
+    suspend fun insertList(name: String) {
         withContext(Dispatchers.IO) {
             databaseDao.insertList(ShoppingList(name = name))
             val asdf = databaseDao.getAllLists()
@@ -42,35 +43,42 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
         }
     }
 
-    fun onAddItem(listNum: Int, name: String){
+    fun onAddItem(listNum: Int, name: String) {
         uiScope.launch {
             insertItem(listNum, name)
-            Log.i("ListsViewModel","Item $name added to list $listNum")
+            Log.i("ListsViewModel", "Item $name added to list $listNum")
 
         }
     }
 
-    fun onGetLists(){}
+    fun onGetLists() {}
 
-    suspend fun getLists(){
+    suspend fun getLists() {
 
     }
 
-    suspend fun insertItem(listNum: Int, name: String){
-        withContext(Dispatchers.IO){
-            databaseDao.insertItem(ShoppingItems(name = name, shoppingList = listNum, quantity = "", unit = ""))
+    suspend fun insertItem(listNum: Int, name: String) {
+        withContext(Dispatchers.IO) {
+            databaseDao.insertItem(
+                ShoppingItems(
+                    name = name,
+                    shoppingList = listNum,
+                    quantity = "",
+                    unit = ""
+                )
+            )
         }
     }
 
-    fun getLiveLists() : LiveData<List<ShoppingList>> {
+    fun getLiveLists(): LiveData<List<ShoppingList>> {
         val asdf = databaseDao.getAllListsLive()
         val fsda = asdf.value
         Log.i("ListViewModel", "lists: $fsda")
         return asdf
 
-        }
+    }
 
-    fun getDasLists() : List<ShoppingList> {
+    fun getDasLists(): List<ShoppingList> {
         var res: List<ShoppingList> = listOf()
         runBlocking {
             res = async { getDasListsForRealsies() }.await()
@@ -81,8 +89,8 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
     }
 
 
-    suspend  fun getDasListsForRealsies() = withContext(Dispatchers.IO) {
-         databaseDao.getAllLists()
+    suspend fun getDasListsForRealsies() = withContext(Dispatchers.IO) {
+        databaseDao.getAllLists()
     }
 
 

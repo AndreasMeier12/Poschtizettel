@@ -34,12 +34,11 @@ class FirstFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
 
-
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val application = requireNotNull(this.activity).application
@@ -50,16 +49,6 @@ class FirstFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ListsViewModel::class.java)
 
-        val listsObserver = Observer<List<ShoppingList>> { newName ->
-            // Update the UI, in this case, a TextView.
-            lists = newName
-
-
-        }
-
-        viewModel.lists.observe(viewLifecycleOwner, Observer { lists ->
-            Log.i("FirstFragment", "list length ${lists.size}")
-        })
 
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
@@ -70,41 +59,19 @@ class FirstFragment : Fragment() {
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
-        val listsObserver = Observer<List<ShoppingList>> { newName ->
-            // Update the UI, in this case, a TextView.
-            lists = newName
 
 
-        }
-
-        viewModel.lists.observe(viewLifecycleOwner, Observer { lists ->
-            Log.i("FirstFragment", "list length ${lists.size}")
-        })
-        val asdf = this
-            Log.i("First", "asdf")
-
-
-
-
-            view.findViewById<TextView>(R.id.textview_first)
-                .setText(viewModel.listsString.value.toString())
-            var textView = view.findViewById<TextView>(R.id.textview_first)
-            val dummyLists = listOf<ShoppingList>(
-                ShoppingList(name = "asdf", listKey = 1),
-                ShoppingList(name = "sdfa", listKey = 2)
-            )
-            val dasLists = viewModel.getDasLists()
-            val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-            val adapter = ShoppingListAdapter(dasLists)
-            recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(asdf.context)
-
+        view.findViewById<TextView>(R.id.textview_first)
+            .setText(viewModel.listsString.value.toString())
+        var textView = view.findViewById<TextView>(R.id.textview_first)
+        val dasLists = viewModel.getDasLists()
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        val adapter = ShoppingListAdapter(dasLists)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
 
 
     }
-
-
-
 
 
 }
