@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_singleListFragment"
+            app:destination="@id/singleListFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -24,5 +27,28 @@
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleListFragment"
+        android:name="com.example.poschtizettel.SingleListFragment"
+        android:label="fragment_single_list"
+        tools:layout="@layout/fragment_single_list" >
+        <action
+            android:id="@+id/action_singleListFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+        <argument
+            android:name="listkey"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/addItemFragment"
+        android:name="com.example.poschtizettel.AddItemFragment"
+        android:label="fragment_add_item"
+        tools:layout="@layout/fragment_add_item" >
+        <action
+            android:id="@+id/action_addItemFragment_to_singleListFragment"
+            app:destination="@id/singleListFragment" />
+        <argument android:name="listkey" />
     </fragment>
 </navigation>

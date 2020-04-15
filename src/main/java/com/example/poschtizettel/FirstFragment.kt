@@ -53,6 +53,13 @@ class FirstFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
+    fun navigateToSingleList(key: Int){
+        val action = FirstFragmentDirections.actionFirstFragmentToSingleListFragment(key)
+
+        findNavController().navigate(R.id.action_FirstFragment_to_singleListFragment)
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -66,7 +73,7 @@ class FirstFragment : Fragment() {
         var textView = view.findViewById<TextView>(R.id.textview_first)
         val dasLists = viewModel.getDasLists()
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-        val adapter = ShoppingListAdapter(dasLists.toMutableList(), viewModel)
+        val adapter = ShoppingListAdapter(dasLists.toMutableList(), viewModel, this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
 

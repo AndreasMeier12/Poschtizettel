@@ -11,13 +11,12 @@ import com.example.poschtizettel.database.PoschtiDatabase
 import com.example.poschtizettel.database.ShoppingList
 
 
-class ShoppingListAdapter(private var shoppingLists: MutableList<ShoppingList>, private val viewModel: ListsViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ShoppingListAdapter(private var shoppingLists: MutableList<ShoppingList>, private val viewModel: ListsViewModel, private val parentFragment: FirstFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         var nameTextView: TextView
         var messageButton: Button
-
         init {
             nameTextView = itemView.findViewById(R.id.contact_name)
             messageButton = itemView.findViewById(R.id.message_button)
@@ -56,6 +55,11 @@ class ShoppingListAdapter(private var shoppingLists: MutableList<ShoppingList>, 
             removeAt(position)
             viewModel.deleteList(currentList.listKey)
         }
+
+        textView.setOnClickListener {
+            parentFragment.navigateToSingleList(currentList.listKey)
+        }
+
     }
 
     fun removeAt(position: Int){
