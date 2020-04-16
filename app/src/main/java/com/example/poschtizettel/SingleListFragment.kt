@@ -6,9 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.poschtizettel.database.PoschtiDatabase
+import com.example.poschtizettel.database.ShoppingItems
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,6 +49,17 @@ class SingleListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         listKey = args.listkey
+
+
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = PoschtiDatabase.getInstance(application).poschtiDatabaseDao
+
+        val viewModelFactory = ListsViewModelFactory(dataSource, application)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ListsViewModel::class.java)
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_single_list, container, false)
     }
@@ -59,6 +75,14 @@ class SingleListFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+
+
+
+        val items = mutableListOf<ShoppingItems>(ShoppingItems(name = "Leek", quantity = ""), ShoppingItems(name = "Flour", quantity = "13"))
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView_singleList)
+        val adapter = ShoppingItemAdapter(viewModel, items, this)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
 
 
     }
