@@ -48,6 +48,11 @@ class ShoppingItemAdapter(private val viewModel: ListsViewModel, val items: Muta
         holder.quantityTextView.text = "${currentItem.quantity} ${currentItem.unit}"
         holder.shopTextView.text = ""
 
+        button.setOnClickListener {
+            viewModel.deleteItem(currentItem.item_key)
+            removeAt(position)
+        }
+
 
 
     }

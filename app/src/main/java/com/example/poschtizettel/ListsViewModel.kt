@@ -103,6 +103,16 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
         databaseDao.deleteList(key)
     }
 
+    fun deleteItem(key: Int){
+        runBlocking {
+            deleteItemCoroutine(key)
+        }
+    }
+
+    private suspend fun deleteItemCoroutine(key: Int) = withContext(Dispatchers.IO){
+        databaseDao.deleteItem(key)
+    }
+
     fun getItemsOfList(key: Int) : List<ShoppingItems>{
         var res: List<ShoppingItems> = listOf()
         runBlocking {
