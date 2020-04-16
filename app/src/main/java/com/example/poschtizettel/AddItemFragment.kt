@@ -5,11 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.example.poschtizettel.database.PoschtiDatabase
+import com.google.android.material.textfield.TextInputEditText
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private var listKey = 0
 
 /**
  * A simple [Fragment] subclass.
@@ -20,6 +28,10 @@ class AddItemFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var listkey = -1
+    private lateinit var viewModel: ListsViewModel
+    val args: AddItemFragmentArgs by navArgs()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,14 +39,47 @@ class AddItemFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        listkey = args.listkey
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = PoschtiDatabase.getInstance(application).poschtiDatabaseDao
+
+        val viewModelFactory = ListsViewModelFactory(dataSource, application)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ListsViewModel::class.java)
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_item, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<Button>(R.id.button_confirm_add_item).setOnClickListener {
+            val name = view.findViewById<TextInputEditText>(R.id.text_input_item_name).text.toString()
+            val quantity = view.findViewById<TextInputEditText>(R.id.text_input_item_quantity).text.toString()
+            val shop = view.findViewById<TextInputEditText>(R.id.text_input_item_shop).text.toString()
+            val unit = view.findViewById<TextInputEditText>(R.id.text_input_item_unit).text.toString()
+            viewModel.onAddItem(name = name, listNum = listkey)
+            navigateBack()
+
+        }
+
+        view.findViewById<Button>(R.id.button_back_add_item).setOnClickListener {
+            navigateBack()
+        }
+
+    }
+
+    fun navigateBack(){
+        val action = AddItemFragmentDirections.actionAddItemFragmentToSingleListFragment(listkey)
+        findNavController().navigate(action)
     }
 
     companion object {
