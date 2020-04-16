@@ -13,10 +13,16 @@ class ShoppingItemAdapter(private val viewModel: ListsViewModel, val items: Muta
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         var nameTextView: TextView
-        var messageButton: Button
+        var deleteButton: Button
+        var quantityTextView: TextView
+        var shopTextView: TextView
+
         init {
             nameTextView = itemView.findViewById(R.id.item_name)
-            messageButton = itemView.findViewById(R.id.item_delete_button)
+            deleteButton = itemView.findViewById(R.id.item_delete_button)
+            quantityTextView = itemView.findViewById(R.id.item_quantity)
+            shopTextView = itemView.findViewById(R.id.text_item_shop_display)
+
         }
 
     }
@@ -36,9 +42,11 @@ class ShoppingItemAdapter(private val viewModel: ListsViewModel, val items: Muta
         val viewHolder : ShoppingItemAdapter.ViewHolder = holder as ViewHolder
         val currentItem = items.get(position)
         val textView = holder.nameTextView
-        val button = holder.messageButton
+        val button = holder.deleteButton
         button.text = "Delete"
         textView.text = currentItem.name
+        holder.quantityTextView.text = "${currentItem.quantity} ${currentItem.unit}"
+        holder.shopTextView.text = ""
 
 
 

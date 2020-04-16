@@ -66,7 +66,7 @@ class AddItemFragment : Fragment() {
             val quantity = view.findViewById<TextInputEditText>(R.id.text_input_item_quantity).text.toString()
             val shop = view.findViewById<TextInputEditText>(R.id.text_input_item_shop).text.toString()
             val unit = view.findViewById<TextInputEditText>(R.id.text_input_item_unit).text.toString()
-            viewModel.onAddItem(name = name, listNum = listkey)
+            viewModel.onAddItem(name = name, listNum = listkey, unit = unit, quantity = quantity, shop = shop)
             navigateBack()
 
         }

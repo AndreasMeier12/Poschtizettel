@@ -36,7 +36,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/text_item_shop"
+            android:id="@+id/text_item_shop_display"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
