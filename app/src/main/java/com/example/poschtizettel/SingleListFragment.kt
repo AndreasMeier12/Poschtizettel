@@ -78,7 +78,7 @@ class SingleListFragment : Fragment() {
 
 
 
-        val items = mutableListOf<ShoppingItems>(ShoppingItems(name = "Leek", quantity = ""), ShoppingItems(name = "Flour", quantity = "13"))
+        val items = viewModel.getItemsOfList(listKey).toMutableList()
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView_singleList)
         val adapter = ShoppingItemAdapter(viewModel, items, this)
         recyclerView.adapter = adapter
