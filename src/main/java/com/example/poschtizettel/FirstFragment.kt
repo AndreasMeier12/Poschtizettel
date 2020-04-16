@@ -55,8 +55,7 @@ class FirstFragment : Fragment() {
 
     fun navigateToSingleList(key: Int){
         val action = FirstFragmentDirections.actionFirstFragmentToSingleListFragment(key)
-
-        findNavController().navigate(R.id.action_FirstFragment_to_singleListFragment)
+        findNavController().navigate(action)
     }
 
 

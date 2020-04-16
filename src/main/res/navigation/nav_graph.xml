@@ -40,6 +40,9 @@
             android:name="listkey"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_singleListFragment_to_addItemFragment"
+            app:destination="@id/addItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/addItemFragment"
@@ -49,6 +52,8 @@
         <action
             android:id="@+id/action_addItemFragment_to_singleListFragment"
             app:destination="@id/singleListFragment" />
-        <argument android:name="listkey" />
+        <argument android:name="listkey"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>
