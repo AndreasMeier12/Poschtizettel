@@ -37,7 +37,7 @@ interface PoschtiDatabaseDao{
     @Query("SELECT * from shopping_items WHERE item_key = :key")
     fun getItem(key: Int): ShoppingItems?
 
-    @Query("SELECT * from shopping_items WHERE list_key = :key")
+    @Query("SELECT * from shopping_items WHERE list_key = :key ORDER BY shop ASC")
     fun getListItems(key: Int): List<ShoppingItems>
 
 
@@ -50,7 +50,7 @@ interface PoschtiDatabaseDao{
     @Query("SELECT * from shopping_items")
     fun getAllItems(): List<ShoppingItems>
 
-    @Query("SELECT * from shopping_items WHERE list_key = :key")
+    @Query("SELECT * from shopping_items WHERE list_key = :key ORDER BY shop ASC, priority desc")
     fun getAllItemsOfList(key: Int): List<ShoppingItems>
 
 

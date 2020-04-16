@@ -4,7 +4,6 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.poschtizettel.database.PoschtiDatabaseDao
-import com.example.poschtizettel.database.Shop
 import com.example.poschtizettel.database.ShoppingItems
 import com.example.poschtizettel.database.ShoppingList
 import kotlinx.coroutines.*
@@ -64,7 +63,8 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
                     name = name,
                     shoppingList = listNum,
                     quantity = quantity,
-                    unit = unit
+                    unit = unit,
+                    shop = shop
                 )
             )
         }

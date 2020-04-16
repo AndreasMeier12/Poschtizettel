@@ -31,17 +31,12 @@ data class ShoppingItems(
     val shoppingList: Int = 0,
 
     @ColumnInfo(name= "done")
-    val done: Boolean = false
+    val done: Boolean = false,
+
+    @ColumnInfo(name = "shop")
+    val shop : String = "",
+
+    @ColumnInfo(name = "priority")
+    val priority: Int = 0
 )
 
-@Entity(tableName = "Shop")
-data class Shop(
-    @PrimaryKey(autoGenerate = true)
-    var shopKey:Int,
-
-    @ColumnInfo(name = "Name")
-    var name: String,
-
-    @ColumnInfo(name="Priority")
-    var priority: Int
-    )
