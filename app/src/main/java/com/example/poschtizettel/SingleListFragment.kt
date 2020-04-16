@@ -58,6 +58,7 @@ class SingleListFragment : Fragment() {
         val viewModelFactory = ListsViewModelFactory(dataSource, application)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ListsViewModel::class.java)
+        val items = viewModel.getItemsOfList(listKey).toMutableList()
 
 
         // Inflate the layout for this fragment
