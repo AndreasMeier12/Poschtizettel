@@ -88,6 +88,10 @@ class SingleListFragment : Fragment() {
 
     }
 
+    fun handleItemDone(key: Int, status: Boolean){
+        viewModel.handleItemDone(key, status)
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

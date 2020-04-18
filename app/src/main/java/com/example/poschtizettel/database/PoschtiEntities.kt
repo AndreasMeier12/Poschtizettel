@@ -31,7 +31,7 @@ data class ShoppingItems(
     val shoppingList: Int = 0,
 
     @ColumnInfo(name= "done")
-    val done: Boolean = false,
+    var done: Boolean = false,
 
     @ColumnInfo(name = "shop")
     val shop : String = "",

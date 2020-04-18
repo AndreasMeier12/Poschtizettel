@@ -7,6 +7,7 @@ import com.example.poschtizettel.database.PoschtiDatabaseDao
 import com.example.poschtizettel.database.ShoppingItems
 import com.example.poschtizettel.database.ShoppingList
 import kotlinx.coroutines.*
+import java.util.function.BinaryOperator
 
 class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Application) :
     AndroidViewModel(application) {
@@ -125,6 +126,22 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     suspend private fun getItemsOfListCoroutine(key: Int) = withContext(Dispatchers.IO){
         databaseDao.getListItems(key)
+
+    }
+
+    fun handleItemDone(key: Int, status: Boolean){
+        runBlocking {
+            handleItemDoneCoRoutine(key, status)
+
+        }
+
+    }
+
+    suspend private fun handleItemDoneCoRoutine(key: Int, status: Boolean){
+        withContext(Dispatchers.IO){
+            databaseDao.updateItemDoneStatus(key, status)
+
+        }
 
     }
 

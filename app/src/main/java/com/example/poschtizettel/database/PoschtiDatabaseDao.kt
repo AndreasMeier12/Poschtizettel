@@ -53,5 +53,9 @@ interface PoschtiDatabaseDao{
     @Query("SELECT * from shopping_items WHERE list_key = :key ORDER BY shop ASC, priority desc")
     fun getAllItemsOfList(key: Int): List<ShoppingItems>
 
+    @Query("UPDATE shopping_items SET done = :status where item_key=:key")
+    fun updateItemDoneStatus(key: Int, status: Boolean)
+
+
 
 }
