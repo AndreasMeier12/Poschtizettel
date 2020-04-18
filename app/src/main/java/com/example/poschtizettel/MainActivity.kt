@@ -37,9 +37,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun onAddList(view: View){
-
-        Log.i("ListAddFragment", "Adding list called with ")
-    }
 
 }
