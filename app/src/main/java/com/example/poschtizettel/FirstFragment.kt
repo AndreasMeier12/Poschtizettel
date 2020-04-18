@@ -67,9 +67,7 @@ class FirstFragment : Fragment() {
         }
 
 
-        view.findViewById<TextView>(R.id.textview_first)
-            .setText(viewModel.listsString.value.toString())
-        var textView = view.findViewById<TextView>(R.id.textview_first)
+
         val dasLists = viewModel.getDasLists()
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         val adapter = ShoppingListAdapter(dasLists.toMutableList(), viewModel, this)
