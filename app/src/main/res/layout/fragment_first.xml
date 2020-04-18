@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eee8d5 "
     tools:context=".FirstFragment">
 
     <Button
         android:id="@+id/button_first"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#859900 "
         android:text="@string/add_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -20,6 +22,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="#eee8d5 "
         app:layout_constraintTop_toBottomOf="@+id/button_first"
         tools:layout_editor_absoluteX="0dp" />
 

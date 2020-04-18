@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eee8d5 "
     tools:context=".SecondFragment">
 
     <TextView
@@ -19,6 +20,7 @@
         android:id="@+id/button_second"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#93a1a1 "
         android:text="@string/previous"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_add_list"
@@ -32,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
         android:layout_marginRight="64dp"
+        android:background="#859900 "
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="462dp" />
@@ -39,8 +42,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_addList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="wrap_content"></com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/textInputEdit_addList"
