@@ -21,6 +21,13 @@
         android:layout_weight="1"
         android:text="TextView" />
 
+    <Button
+        android:id="@+id/button_item_done"
+        android:layout_width="42dp"
+        android:layout_height="24dp"
+        android:background="#859900 "
+        android:text="Done" />
+
     <TextView
         android:id="@+id/text_item_shop_display"
         android:layout_width="match_parent"
@@ -31,17 +38,10 @@
     <Button
         android:id="@+id/item_delete_button"
         android:layout_width="46dp"
-        android:layout_height="wrap_content"
+        android:layout_height="19dp"
         android:background="#dc322f "
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textSize="10sp" />
-
-    <Button
-        android:id="@+id/button_item_done"
-        android:layout_width="42dp"
-        android:layout_height="wrap_content"
-        android:background="#859900 "
-        android:text="Done" />
 
 </LinearLayout>
