@@ -35,14 +35,17 @@
         tools:layout="@layout/fragment_single_list" >
         <action
             android:id="@+id/action_singleListFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            app:destination="@id/FirstFragment"
+            app:popUpTo="@id/singleListFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="listkey"
             app:argType="integer"
             android:defaultValue="0" />
         <action
             android:id="@+id/action_singleListFragment_to_addItemFragment"
-            app:destination="@id/addItemFragment" />
+            app:destination="@id/addItemFragment"
+            app:popUpTo="@id/singleListFragment" />
     </fragment>
     <fragment
         android:id="@+id/addItemFragment"
@@ -51,7 +54,9 @@
         tools:layout="@layout/fragment_add_item" >
         <action
             android:id="@+id/action_addItemFragment_to_singleListFragment"
-            app:destination="@id/singleListFragment" />
+            app:destination="@id/singleListFragment"
+            app:popUpTo="@id/singleListFragment"
+            app:popUpToInclusive="true" />
         <argument android:name="listkey"
             app:argType="integer"
             android:defaultValue="0" />
