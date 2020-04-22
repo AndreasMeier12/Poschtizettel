@@ -60,13 +60,8 @@ class ShoppingItemAdapter(private val viewModel: ListsViewModel, val items: Muta
 
         holder.doneButton.setOnClickListener {
             currentItem.done = !currentItem.done
-            if (currentItem.done){
-                textView.setPaintFlags(textView.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
-            }
-            else{
-                textView.setPaintFlags(textView.getPaintFlags() and (Paint.STRIKE_THRU_TEXT_FLAG).inv())
-            }
             parent.handleItemDone(currentItem.item_key, currentItem.done)
+            notifyItemChanged(position)
         }
 
 
