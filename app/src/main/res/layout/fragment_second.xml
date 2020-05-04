@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eee8d5 "
-    tools:context=".SecondFragment">
+    tools:context=".AddShoppingListFragment">
 
     <TextView
         android:id="@+id/textview_second"
@@ -50,6 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:hint="@string/list"
+        android:focusable="true"
+
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

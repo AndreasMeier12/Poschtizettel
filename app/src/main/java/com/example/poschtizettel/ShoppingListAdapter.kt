@@ -5,13 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.poschtizettel.database.PoschtiDatabase
 import com.example.poschtizettel.database.ShoppingList
 
 
-class ShoppingListAdapter(private var shoppingLists: MutableList<ShoppingList>, private val viewModel: ListsViewModel, private val parentFragment: FirstFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ShoppingListAdapter(private var shoppingLists: MutableList<ShoppingList>, private val viewModel: ListsViewModel, private val parentFragment: ShoppingListsFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 

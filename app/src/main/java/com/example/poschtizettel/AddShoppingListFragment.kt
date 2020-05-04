@@ -14,7 +14,7 @@ import com.google.android.material.textfield.TextInputEditText
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class SecondFragment : Fragment() {
+class AddShoppingListFragment : Fragment() {
     private lateinit var viewModel: ListsViewModel
 
     override fun onCreateView(
@@ -45,8 +45,12 @@ class SecondFragment : Fragment() {
             val dataSource = PoschtiDatabase.getInstance(application)
             val textField = view.findViewById<TextInputEditText>(R.id.textInputEdit_addList)
             val asdf = textField.text.toString()
+            if (asdf != ""){
+
             viewModel.onAddList(asdf)
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            }
+
         }
 
     }

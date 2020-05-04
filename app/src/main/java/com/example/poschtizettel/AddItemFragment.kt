@@ -58,6 +58,7 @@ class AddItemFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_add_item, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -67,7 +68,12 @@ class AddItemFragment : Fragment() {
             val shop = view.findViewById<TextInputEditText>(R.id.text_input_item_shop).text.toString()
             val unit = view.findViewById<TextInputEditText>(R.id.text_input_item_unit).text.toString()
             clearInputs()
+            view.findViewById<TextInputEditText>(R.id.text_input_item_name).requestFocus()
+
+            if(name != ""){
             viewModel.onAddItem(name = name, listNum = listkey, unit = unit, quantity = quantity, shop = shop)
+            }
+
 
         }
 

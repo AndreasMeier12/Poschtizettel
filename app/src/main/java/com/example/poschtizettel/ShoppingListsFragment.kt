@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment() {
+class ShoppingListsFragment : Fragment() {
     private lateinit var viewModel: ListsViewModel
     lateinit var lists: List<ShoppingList>
 
@@ -54,7 +54,7 @@ class FirstFragment : Fragment() {
     }
 
     fun navigateToSingleList(key: Int){
-        val action = FirstFragmentDirections.actionFirstFragmentToSingleListFragment(key)
+        val action = ShoppingListsFragmentDirections.actionFirstFragmentToSingleListFragment(key)
         findNavController().navigate(action)
     }
 
