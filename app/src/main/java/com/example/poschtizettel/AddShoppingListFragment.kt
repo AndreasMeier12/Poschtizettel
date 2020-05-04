@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.poschtizettel.database.PoschtiDatabase
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 
 /**
@@ -46,9 +47,12 @@ class AddShoppingListFragment : Fragment() {
             val textField = view.findViewById<TextInputEditText>(R.id.textInputEdit_addList)
             val asdf = textField.text.toString()
             if (asdf != ""){
-
-            viewModel.onAddList(asdf)
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+                    viewModel.onAddList(asdf)
+                    findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            }
+            else{
+                val snackbar = Snackbar.make(it, "Please enter list name", 600)
+                snackbar.show()
             }
 
         }
