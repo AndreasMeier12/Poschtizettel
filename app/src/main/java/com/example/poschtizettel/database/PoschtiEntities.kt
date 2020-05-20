@@ -4,7 +4,7 @@ import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 import org.jetbrains.annotations.NotNull
 
-@Entity(tableName = "shopping_lists", indices = [Index(value = ["Name"], unique = true)])
+@Entity(tableName = "shopping_lists", indices = [Index(value = ["Name"])])
 data class ShoppingList(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="List_Key")

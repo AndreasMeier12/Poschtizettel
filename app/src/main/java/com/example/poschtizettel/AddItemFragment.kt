@@ -67,11 +67,10 @@ class AddItemFragment : Fragment() {
             val name = view.findViewById<TextInputEditText>(R.id.text_input_item_name).text.toString()
             val quantity = view.findViewById<TextInputEditText>(R.id.text_input_item_quantity).text.toString()
             val shop = view.findViewById<TextInputEditText>(R.id.text_input_item_shop).text.toString()
-            val unit = view.findViewById<TextInputEditText>(R.id.text_input_item_unit).text.toString()
             clearInputs()
             view.findViewById<TextInputEditText>(R.id.text_input_item_name).requestFocus()
             if(name != ""){
-            viewModel.onAddItem(name = name, listNum = listkey, unit = unit, quantity = quantity, shop = shop)
+                viewModel.onAddItem(name = name, listNum = listkey, quantity = quantity, shop = shop)
 
                 val snackbar = Snackbar.make(it, "Item " + name + "added", 300)
                 snackbar.show()
@@ -80,6 +79,7 @@ class AddItemFragment : Fragment() {
                 snackbar.show()
 
 
+            viewModel.onAddItem(name = name, listNum = listkey, quantity = quantity, shop = shop)
             }
 
 
@@ -94,7 +94,6 @@ class AddItemFragment : Fragment() {
     fun clearInputs(){
         view?.findViewById<TextInputEditText>(R.id.text_input_item_name)?.setText("")
         view?.findViewById<TextInputEditText>(R.id.text_input_item_quantity)?.setText("")
-        view?.findViewById<TextInputEditText>(R.id.text_input_item_unit)?.setText("")
     }
 
     fun navigateBack(){
