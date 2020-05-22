@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.poschtizettel.database.PoschtiDatabase
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 
 // TODO: Rename parameter arguments, choose names that match
@@ -69,9 +70,16 @@ class AddItemFragment : Fragment() {
             val unit = view.findViewById<TextInputEditText>(R.id.text_input_item_unit).text.toString()
             clearInputs()
             view.findViewById<TextInputEditText>(R.id.text_input_item_name).requestFocus()
-
             if(name != ""){
             viewModel.onAddItem(name = name, listNum = listkey, unit = unit, quantity = quantity, shop = shop)
+
+                val snackbar = Snackbar.make(it, "Item " + name + "added", 300)
+                snackbar.show()
+            } else{
+                val snackbar = Snackbar.make(it, "Can't enter empty name", 600)
+                snackbar.show()
+
+
             }
 
 
