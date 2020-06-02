@@ -43,9 +43,9 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
         }
     }
 
-    fun onAddItem(listNum: Int, name: String, quantity: String = "", unit: String="", shop: String ="") {
+    fun onAddItem(listNum: Int, name: String, quantity: String = "", shop: String ="") {
         uiScope.launch {
-            insertItem(listNum, name, unit = unit, quantity = quantity, shop = shop)
+            insertItem(listNum, name, quantity = quantity, shop = shop)
             Log.i("ListsViewModel", "Item $name added to list $listNum")
 
         }
@@ -57,14 +57,13 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     }
 
-    suspend fun insertItem(listNum: Int, name: String, quantity: String="", unit: String = "", shop:String ="") {
+    suspend fun insertItem(listNum: Int, name: String, quantity: String="", shop:String ="") {
         withContext(Dispatchers.IO) {
             databaseDao.insertItem(
                 ShoppingItems(
                     name = name,
                     shoppingList = listNum,
                     quantity = quantity,
-                    unit = unit,
                     shop = shop
                 )
             )
