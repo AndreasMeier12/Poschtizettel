@@ -54,6 +54,9 @@ class ShoppingItemAdapter(private val viewModel: ListsViewModel, val items: Muta
         if (currentItem.done){
             textView.setPaintFlags(textView.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
         }
+        if (!currentItem.done){
+            textView.setPaintFlags(textView.getPaintFlags() and Paint.STRIKE_THRU_TEXT_FLAG.inv())
+        }
 
 
 
@@ -61,13 +64,14 @@ class ShoppingItemAdapter(private val viewModel: ListsViewModel, val items: Muta
         holder.doneButton.setOnClickListener {
             currentItem.done = !currentItem.done
             parent.handleItemDone(currentItem.item_key, currentItem.done)
-            notifyItemChanged(position)
+            notifyDataSetChanged()
         }
 
 
         button.setOnClickListener {
             viewModel.deleteItem(currentItem.item_key)
             removeAt(position)
+            notifyDataSetChanged()
         }
 
 
@@ -78,7 +82,8 @@ class ShoppingItemAdapter(private val viewModel: ListsViewModel, val items: Muta
     fun removeAt(position: Int){
         items.removeAt(position)
         notifyItemRemoved(position)
-        notifyItemRangeChanged(position, items.size)
+        notifyItemRangeChanged(position, 1)
+        notifyDataSetChanged()
 
     }
 
