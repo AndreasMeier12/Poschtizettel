@@ -33,6 +33,7 @@ class SingleListFragment : Fragment() {
     private lateinit var viewModel: ListsViewModel
     private var listKey = 0
     val args: SingleListFragmentArgs by navArgs()
+    private lateinit var adapter: ShoppingItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,12 +77,19 @@ class SingleListFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        view.findViewById<Button>(R.id.button_clear_list).setOnClickListener {
+            if (adapter != null){
+                adapter.clearDone()
+
+            }
+        }
+
 
 
 
         val items = viewModel.getItemsOfList(listKey).toMutableList()
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView_singleList)
-        val adapter = ShoppingItemAdapter(viewModel, items, this)
+        adapter = ShoppingItemAdapter(viewModel, items, this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
 

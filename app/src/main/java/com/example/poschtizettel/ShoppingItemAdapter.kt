@@ -82,4 +82,20 @@ class ShoppingItemAdapter(private val viewModel: ListsViewModel, val items: Muta
 
     }
 
+
+    fun clearDone(){
+        val iterator = items.iterator()
+        while (iterator.hasNext()){
+            val item = iterator.next()
+            if (item.done){
+                iterator.remove()
+                viewModel.deleteItem(item.item_key)
+                notifyDataSetChanged()
+
+            }
+        }
+
+
+    }
+
 }

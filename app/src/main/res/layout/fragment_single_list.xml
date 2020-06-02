@@ -17,16 +17,27 @@
             android:layout_height="wrap_content"
             android:background="#93a1a1 "
             android:text="Back"
-            app:layout_constraintEnd_toStartOf="@+id/button_add_item"
+            app:layout_constraintEnd_toStartOf="@+id/button_clear_list"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_clear_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="68dp"
+            android:layout_marginRight="68dp"
+            android:background="#dc322f "
+            android:text="Clear Done"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_item"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button_add_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="88dp"
-            android:layout_marginRight="88dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
             android:background="#859900 "
             android:text="Add"
             app:layout_constraintEnd_toEndOf="parent"
