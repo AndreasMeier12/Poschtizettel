@@ -24,6 +24,7 @@
         android:layout_marginTop="80dp"
         android:focusable="true"
         android:hint="@string/list"
+        android:singleLine="true"
 
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />

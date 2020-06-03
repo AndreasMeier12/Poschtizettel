@@ -51,6 +51,7 @@
                         android:id="@+id/text_input_item_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:singleLine="true"
                         android:hint="item name" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,6 +59,7 @@
                     android:id="@+id/text_input_item_shop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:hint="shop" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -74,6 +76,7 @@
                         android:id="@+id/text_input_item_quantity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:singleLine="true"
                         android:hint="quanitity" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
