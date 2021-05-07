@@ -23,7 +23,7 @@ abstract class PoschtiDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         PoschtiDatabase::class.java,
-                        "sleep_history_database"
+                        "poschtizettel_database"
                     )
                         .fallbackToDestructiveMigration()
                         .build()
