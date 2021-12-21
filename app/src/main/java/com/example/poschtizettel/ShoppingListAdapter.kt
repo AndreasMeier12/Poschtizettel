@@ -46,7 +46,7 @@ class ShoppingListAdapter(private var shoppingLists: MutableList<ShoppingList>, 
         val currentList = shoppingLists.get(position)
         var selectButton = holder.selectListButton
         val button: Button = holder.messageButton
-        button.text = "Delete"
+        button.text = "✖️"
         selectButton.text = currentList.name
         button.setOnClickListener {
             removeAt(position)

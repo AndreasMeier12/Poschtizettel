@@ -26,7 +26,7 @@
         android:layout_width="42dp"
         android:layout_height="24dp"
         android:background="#859900 "
-        android:text="√" />
+        android:text="✔️" />
 
     <TextView
         android:id="@+id/text_item_shop_display"

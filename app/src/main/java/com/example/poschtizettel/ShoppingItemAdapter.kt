@@ -47,7 +47,7 @@ class ShoppingItemAdapter(private val viewModel: ListsViewModel, val items: Muta
         var currentItem = items.get(position)
         val textView = holder.nameTextView
         val button = holder.deleteButton
-        button.text = "X"
+        button.text = "✖️"
         textView.text = currentItem.name
         holder.quantityTextView.text = "${currentItem.quantity} ${currentItem.unit}"
         holder.shopTextView.text = currentItem.shop
