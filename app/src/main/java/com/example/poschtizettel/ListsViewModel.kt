@@ -149,11 +149,12 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
     suspend private fun handleItemDoneCoRoutine(key: String, status: Boolean){
         withContext(Dispatchers.IO){
             var asdf = databaseDao.getItem(key)
+            val newId = UUID.randomUUID().toString()
             if (asdf == null){
                 asdf = ShoppingItems(key, "", "", "", "", false, "")
             }
             databaseDao.updateItemDoneStatus(key, status)
-            databaseDao.insertItemCommand(ItemCommand(key, asdf.name, asdf.quantity, asdf.unit, asdf.shoppingList, !asdf.done, asdf.shop, CommandType.UPDATE ))
+            databaseDao.insertItemCommand(ItemCommand(newId, asdf.name, asdf.quantity, asdf.unit, asdf.shoppingList, !asdf.done, asdf.shop, CommandType.UPDATE ))
 
         }
 
