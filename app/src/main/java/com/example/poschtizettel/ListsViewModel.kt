@@ -100,7 +100,12 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
     }
 
     private suspend fun deleteListCoroutine(key: String) = withContext(Dispatchers.IO){
+        var asdf = databaseDao.getList(key)
+        if (asdf == null){
+            asdf = ShoppingList(key, "")
+        }
         databaseDao.deleteList(key)
+        databaseDao.insertListCommand(ListCommand(key, asdf.name, CommandType.DELETE))
     }
 
     fun deleteItem(key: String){
@@ -110,7 +115,12 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
     }
 
     private suspend fun deleteItemCoroutine(key: String) = withContext(Dispatchers.IO){
+        var asdf = databaseDao.getItem(key)
+        if (asdf == null){
+           asdf = ShoppingItems(key, "", "", "", "", false, "")
+        }
         databaseDao.deleteItem(key)
+        databaseDao.insertItemCommand(ItemCommand(key, asdf.name, asdf.quantity, asdf.unit, asdf.shoppingList, false, asdf.shop, CommandType.DELETE ))
     }
 
     fun getItemsOfList(key: String) : List<ShoppingItems>{
@@ -138,7 +148,12 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     suspend private fun handleItemDoneCoRoutine(key: String, status: Boolean){
         withContext(Dispatchers.IO){
+            var asdf = databaseDao.getItem(key)
+            if (asdf == null){
+                asdf = ShoppingItems(key, "", "", "", "", false, "")
+            }
             databaseDao.updateItemDoneStatus(key, status)
+            databaseDao.insertItemCommand(ItemCommand(key, asdf.name, asdf.quantity, asdf.unit, asdf.shoppingList, !asdf.done, asdf.shop, CommandType.UPDATE ))
 
         }
 
