@@ -31,7 +31,7 @@ class SingleListFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var viewModel: ListsViewModel
-    private var listKey = 0
+    private var listKey = "0"
     val args: SingleListFragmentArgs by navArgs()
     private lateinit var adapter: ShoppingItemAdapter
 
@@ -96,7 +96,7 @@ class SingleListFragment : Fragment() {
 
     }
 
-    fun handleItemDone(key: Int, status: Boolean){
+    fun handleItemDone(key: String, status: Boolean){
         viewModel.handleItemDone(key, status)
     }
 

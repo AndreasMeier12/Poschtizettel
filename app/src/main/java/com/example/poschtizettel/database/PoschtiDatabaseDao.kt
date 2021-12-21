@@ -10,7 +10,14 @@ interface PoschtiDatabaseDao{
     fun insertList(list: ShoppingList)
 
     @Insert
+    fun insertListCommand(list: ListCommand)
+
+
+    @Insert
     fun insertItem(item: ShoppingItems)
+
+    @Insert
+    fun insertItemCommand(item: ItemCommand)
 
     @Delete
     fun deleteList(list: ShoppingList)
@@ -19,10 +26,10 @@ interface PoschtiDatabaseDao{
     fun deleteItem(item: ShoppingItems)
 
     @Query("DELETE  FROM shopping_items WHERE item_key = :key")
-    fun deleteItem(key: Int)
+    fun deleteItem(key: String)
 
     @Query("DELETE  FROM shopping_lists WHERE list_key = :key")
-    fun deleteList(key: Int)
+    fun deleteList(key: String)
 
 
     @Update
@@ -32,13 +39,13 @@ interface PoschtiDatabaseDao{
     fun updateItem(list:ShoppingList)
 
     @Query("SELECT * from shopping_lists WHERE List_Key = :key")
-    fun getList(key: Int): ShoppingList?
+    fun getList(key: String): ShoppingList?
 
     @Query("SELECT * from shopping_items WHERE item_key = :key")
-    fun getItem(key: Int): ShoppingItems?
+    fun getItem(key: String): ShoppingItems?
 
     @Query("SELECT * from shopping_items WHERE list_key = :key ORDER BY shop ASC")
-    fun getListItems(key: Int): List<ShoppingItems>
+    fun getListItems(key: String): List<ShoppingItems>
 
 
     @Query("SELECT * from shopping_lists")
@@ -51,10 +58,10 @@ interface PoschtiDatabaseDao{
     fun getAllItems(): List<ShoppingItems>
 
     @Query("SELECT * from shopping_items WHERE list_key = :key ORDER BY shop ASC, priority desc")
-    fun getAllItemsOfList(key: Int): List<ShoppingItems>
+    fun getAllItemsOfList(key: String): List<ShoppingItems>
 
     @Query("UPDATE shopping_items SET done = :status where item_key=:key")
-    fun updateItemDoneStatus(key: Int, status: Boolean)
+    fun updateItemDoneStatus(key: String, status: Boolean)
 
 
 

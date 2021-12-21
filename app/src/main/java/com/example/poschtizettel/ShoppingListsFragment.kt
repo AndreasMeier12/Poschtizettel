@@ -53,7 +53,7 @@ class ShoppingListsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
-    fun navigateToSingleList(key: Int){
+    fun navigateToSingleList(key: String){
         val action = ShoppingListsFragmentDirections.actionFirstFragmentToSingleListFragment(key)
         findNavController().navigate(action)
     }

@@ -3,11 +3,9 @@ package com.example.poschtizettel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.poschtizettel.database.PoschtiDatabaseDao
-import com.example.poschtizettel.database.ShoppingItems
-import com.example.poschtizettel.database.ShoppingList
+import com.example.poschtizettel.database.*
 import kotlinx.coroutines.*
-import java.util.function.BinaryOperator
+import java.util.*
 
 class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Application) :
     AndroidViewModel(application) {
@@ -36,14 +34,13 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     suspend fun insertList(name: String) {
         withContext(Dispatchers.IO) {
-            databaseDao.insertList(ShoppingList(name = name))
-            val asdf = databaseDao.getAllLists()
-            val fsda = databaseDao.getList(0)
-            Log.i("Coroutine", fsda.toString())
+            val listKey = UUID.randomUUID().toString()
+            databaseDao.insertList(ShoppingList(listKey,name = name))
+            databaseDao.insertListCommand(ListCommand(listKey = listKey, name=name, type=CommandType.CREATE))
         }
     }
 
-    fun onAddItem(listNum: Int, name: String, quantity: String = "", shop: String ="") {
+    fun onAddItem(listNum: String, name: String, quantity: String = "", shop: String ="") {
         uiScope.launch {
             insertItem(listNum, name, quantity = quantity, shop = shop)
             Log.i("ListsViewModel", "Item $name added to list $listNum")
@@ -57,8 +54,9 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     }
 
-    suspend fun insertItem(listNum: Int, name: String, quantity: String="", shop:String ="") {
+    suspend fun insertItem(listNum: String, name: String, quantity: String="", shop:String ="") {
         withContext(Dispatchers.IO) {
+            val itemKey = UUID.randomUUID().toString()
             databaseDao.insertItem(
                 ShoppingItems(
                     name = name,
@@ -67,6 +65,8 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
                     shop = shop
                 )
             )
+            databaseDao.insertItemCommand(ItemCommand(itemKey = itemKey, name = name, quantity = quantity, unit = "", shoppingList = listNum, done=false, shop = shop, type = CommandType.CREATE))
+
         }
     }
 
@@ -93,27 +93,27 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
         databaseDao.getAllLists()
     }
 
-    fun deleteList(key: Int){
+    fun deleteList(key: String){
         runBlocking {
             deleteListCoroutine(key)
         }
     }
 
-    private suspend fun deleteListCoroutine(key: Int) = withContext(Dispatchers.IO){
+    private suspend fun deleteListCoroutine(key: String) = withContext(Dispatchers.IO){
         databaseDao.deleteList(key)
     }
 
-    fun deleteItem(key: Int){
+    fun deleteItem(key: String){
         runBlocking {
             deleteItemCoroutine(key)
         }
     }
 
-    private suspend fun deleteItemCoroutine(key: Int) = withContext(Dispatchers.IO){
+    private suspend fun deleteItemCoroutine(key: String) = withContext(Dispatchers.IO){
         databaseDao.deleteItem(key)
     }
 
-    fun getItemsOfList(key: Int) : List<ShoppingItems>{
+    fun getItemsOfList(key: String) : List<ShoppingItems>{
         var res: List<ShoppingItems> = listOf()
         runBlocking {
             res = async { getItemsOfListCoroutine(key) }.await()
@@ -123,12 +123,12 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     }
 
-    suspend private fun getItemsOfListCoroutine(key: Int) = withContext(Dispatchers.IO){
+    suspend private fun getItemsOfListCoroutine(key: String) = withContext(Dispatchers.IO){
         databaseDao.getListItems(key)
 
     }
 
-    fun handleItemDone(key: Int, status: Boolean){
+    fun handleItemDone(key: String, status: Boolean){
         runBlocking {
             handleItemDoneCoRoutine(key, status)
 
@@ -136,7 +136,7 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     }
 
-    suspend private fun handleItemDoneCoRoutine(key: Int, status: Boolean){
+    suspend private fun handleItemDoneCoRoutine(key: String, status: Boolean){
         withContext(Dispatchers.IO){
             databaseDao.updateItemDoneStatus(key, status)
 

@@ -17,6 +17,7 @@ import org.junit.Before
 import org.junit.runner.RunWith
 import java.io.IOException
 import java.lang.Exception
+import java.util.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -111,7 +112,7 @@ class DatabaseTest {
         val myList = ShoppingList(name = listName)
         val listNum = dbDAO.insertList(myList)
         val lists = dbDAO.getAllLists()
-        var listKey = 0
+        var listKey = UUID.randomUUID().toString()
         if(lists != null){listKey = lists.get(0).listKey}
         val lentils = ShoppingItems(name = "lentils", shoppingList = listKey, quantity = "1")
         dbDAO.insertItem(lentils)
@@ -134,21 +135,22 @@ class DatabaseTest {
         val listName2 = "differentList"
         val listName3 = "evenmoredifferentlist"
 
-        val myList = ShoppingList(name = listName)
+        val myListUUID = UUID.randomUUID().toString()
+        val myList = ShoppingList(name = listName, listKey = myListUUID)
         val listNum = dbDAO.insertList(myList)
         val lists = dbDAO.getAllLists()
-        var listKey = 0
+        var listKey = UUID.randomUUID().toString()
         if(lists != null){listKey = lists.get(0).listKey}
         dbDAO.insertList(ShoppingList(name = listName2))
         dbDAO.insertList(ShoppingList(name = listName3))
 
         val lentils = ShoppingItems(name = "lentils", shoppingList = listKey, quantity = "1")
         dbDAO.insertItem(lentils)
-        val rum = ShoppingItems(name = "rum", shoppingList = 2, quantity = "1")
+        val rum = ShoppingItems(name = "rum", shoppingList = "2", quantity = "1")
         dbDAO.insertItem(rum)
-        val electrons = ShoppingItems(name = "electrons", shoppingList = 2, quantity = "6e23")
+        val electrons = ShoppingItems(name = "electrons", shoppingList = "2", quantity = "6e23")
         dbDAO.insertItem(electrons)
-        val barley = ShoppingItems (name = "barley", shoppingList = 3, quantity = "1")
+        val barley = ShoppingItems (name = "barley", shoppingList = "3", quantity = "1")
         dbDAO.insertItem(barley)
         dbDAO.deleteList(listKey)
         val newLists = dbDAO.getAllLists()
@@ -166,7 +168,7 @@ class DatabaseTest {
         val listNum = dbDAO.insertList(myList)
 
         val lists = dbDAO.getAllLists()
-        var listKey = 0
+        var listKey = UUID.randomUUID().toString()
         if(lists != null){listKey = lists.get(0).listKey}
         val lentils = ShoppingItems(name = "lentils", shoppingList = listKey, quantity = "1")
         dbDAO.insertItem(lentils)
@@ -177,13 +179,13 @@ class DatabaseTest {
         val barley = ShoppingItems (name = "barley", shoppingList = listKey, quantity = "1")
         dbDAO.insertItem(barley)
 
-        val asdf = dbDAO.getItem(1)
+        val asdf = dbDAO.getItem(rum.item_key)
 
         if (asdf != null) {
             dbDAO.deleteItem(asdf)
         }
         val items = dbDAO.getAllItemsOfList(listKey)
-        assertEquals(3, items?.size)
+        assertEquals(3, items.size)
     }
 
 }

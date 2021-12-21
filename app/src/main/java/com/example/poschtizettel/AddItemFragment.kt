@@ -18,7 +18,7 @@ import com.google.android.material.textfield.TextInputEditText
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private var listKey = 0
+private var listKey = "0"
 
 /**
  * A simple [Fragment] subclass.
@@ -29,7 +29,7 @@ class AddItemFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var listkey = -1
+    private var listkey = "-1"
     private lateinit var viewModel: ListsViewModel
     val args: AddItemFragmentArgs by navArgs()
 

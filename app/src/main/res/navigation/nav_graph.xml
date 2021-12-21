@@ -40,7 +40,7 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="listkey"
-            app:argType="integer"
+            app:argType="string"
             android:defaultValue="0" />
         <action
             android:id="@+id/action_singleListFragment_to_addItemFragment"
@@ -58,7 +58,7 @@
             app:popUpTo="@id/singleListFragment"
             app:popUpToInclusive="true" />
         <argument android:name="listkey"
-            app:argType="integer"
+            app:argType="string"
             android:defaultValue="0" />
     </fragment>
 </navigation>
