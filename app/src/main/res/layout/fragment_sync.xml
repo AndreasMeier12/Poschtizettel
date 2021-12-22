@@ -1,29 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SyncFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/editTextTextToken"
+        android:layout_width="416dp"
+        android:layout_height="44dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:inputType="text"
+        android:text="Token"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextUsername"
+        tools:layout_editor_absoluteX="-3dp" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/editTextTextURL"
+        android:layout_width="416dp"
+        android:layout_height="44dp"
+        android:ems="10"
+        android:inputType="textUri"
+        android:text="URL"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextToken"
+        tools:layout_editor_absoluteX="-3dp" />
+
+    <EditText
+        android:id="@+id/editTextTextUsername"
+        android:layout_width="419dp"
+        android:layout_height="44dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text="Username"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_apply"
+        android:layout_width="83dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/apply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+
+    <Button
+        android:id="@+id/mergee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword" />
+        android:layout_marginTop="52dp"
+        android:text="@string/merge"
+        app:layout_constraintTop_toBottomOf="@+id/button_apply"
+        tools:layout_editor_absoluteX="159dp" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/button_set_remote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="@string/set_to_remote"
+        app:layout_constraintTop_toBottomOf="@+id/mergee"
+        tools:layout_editor_absoluteX="162dp" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:text="@string/set_to_local"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_set_remote"
+        tools:layout_editor_absoluteX="163dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

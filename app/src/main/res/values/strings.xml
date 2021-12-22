@@ -16,6 +16,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="AddButtonText">Add</string>
     <string name="sync_fragment_label">syncfragment</string>
+    <string name="apply">Apply</string>
+    <string name="merge">Merge</string>
+    <string name="set_to_remote">Set to remote</string>
+    <string name="set_to_local">Set to local</string>
 
 
 </resources>
