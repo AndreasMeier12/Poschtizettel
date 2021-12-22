@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_singleListFragment"
             app:destination="@id/singleListFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_SyncFragment"
+            app:destination="@id/SyncFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -61,4 +64,11 @@
             app:argType="string"
             android:defaultValue="0" />
     </fragment>
+    <fragment
+        android:id="@+id/SyncFragment"
+        android:name="com.example.poschtizettel.SyncFragment"
+        android:label="@string/sync_fragment_label"
+        tools:layout="@layout/fragment_sync">
+    </fragment>
+
 </navigation>
