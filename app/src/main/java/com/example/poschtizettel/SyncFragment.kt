@@ -11,6 +11,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.lifecycle.ViewModelProvider
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.poschtizettel.database.PoschtiDatabase
 import com.google.android.material.textfield.TextInputEditText
 
@@ -21,7 +25,7 @@ private const val ARG_PARAM2 = "param2"
 private const val TOKEN = "token"
 private const val URL = "url"
 private const val USERNAME = "username"
-private const val GET_URL = ""
+private const val GET_URL = "/api/lists"
 private const val NUKE_URL = ""
 private const val REMOTE_URL = ""
 
@@ -87,6 +91,9 @@ class SyncFragment : Fragment() {
             Log.i("ApplySettings", "applySettings: ${name}. ${url}, ${token}")
 
         }
+        view.findViewById<Button>(R.id.button_set_remote).setOnClickListener{
+            getWhatever()
+        }
 
     }
 
@@ -123,10 +130,31 @@ class SyncFragment : Fragment() {
 
     }
 
+    fun getWhatever(){
+        val prefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        if (prefs != null) {
+            val textView = view!!.findViewById<AppCompatEditText>(R.id.editTextTextURL)
+// ...
 
-    fun applySettings(){
+// Instantiate the RequestQueue.
+            val queue = Volley.newRequestQueue(context)
+            val url = "https://www.google.com"
+
+// Request a string response from the provided URL.
+            val stringRequest = StringRequest(Request.Method.GET, url,
+                Response.Listener<String> { response ->
+                    // Display the first 500 characters of the response string.
+                    textView.setText("Response is: ${response.substring(0, 500)}) ")
+                },
+                Response.ErrorListener {  error -> textView.setText( "${error.toString()}") })
+
+// Add the request to the RequestQueue.
+            queue.add(stringRequest)
 
 
+
+        }
 
     }
+
 }

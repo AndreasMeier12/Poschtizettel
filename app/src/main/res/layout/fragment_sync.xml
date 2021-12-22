@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
 
     <Button
-        android:id="@+id/mergee"
+        android:id="@+id/button_merge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
