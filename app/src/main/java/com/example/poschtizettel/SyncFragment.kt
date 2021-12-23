@@ -21,6 +21,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
 import java.nio.charset.Charset
+import java.util.*
 import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
@@ -250,7 +251,7 @@ class SyncFragment : Fragment() {
     }
 
     fun itemToCommand(a: ShoppingItems) : ItemCommand {
-        return ItemCommand(itemKey = a.item_key, name=a.name, quantity = a.quantity, unit=a.unit, shoppingList = a.shoppingList, done=a.done, shop=a.shop, type=CommandType.CREATE)
+        return ItemCommand(commandKey = UUID.randomUUID().toString() , itemKey = a.item_key, name=a.name, quantity = a.quantity, unit=a.unit, shoppingList = a.shoppingList, done=a.done, shop=a.shop, type=CommandType.CREATE)
     }
 
     fun listToCommand(a: ShoppingList) : ListCommand {

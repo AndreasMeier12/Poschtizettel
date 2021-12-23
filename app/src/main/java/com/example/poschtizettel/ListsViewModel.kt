@@ -66,7 +66,7 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
                     shop = shop
                 )
             )
-            databaseDao.insertItemCommand(ItemCommand(itemKey = itemKey, name = name, quantity = quantity, unit = "", shoppingList = listNum, done=false, shop = shop, type = CommandType.CREATE))
+            databaseDao.insertItemCommand(ItemCommand(commandKey = UUID.randomUUID().toString(), itemKey = itemKey, name = name, quantity = quantity, unit = "", shoppingList = listNum, done=false, shop = shop, type = CommandType.CREATE))
 
         }
     }
@@ -135,7 +135,7 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
            asdf = ShoppingItems(key, "", "", "", "", false, "")
         }
         databaseDao.deleteItem(key)
-        databaseDao.insertItemCommand(ItemCommand(key, asdf.name, asdf.quantity, asdf.unit, asdf.shoppingList, false, asdf.shop, CommandType.DELETE ))
+        databaseDao.insertItemCommand(ItemCommand( commandKey = UUID.randomUUID().toString(), key, asdf.name, asdf.quantity, asdf.unit, asdf.shoppingList, false, asdf.shop, CommandType.DELETE ))
     }
 
     fun getItemsOfList(key: String) : List<ShoppingItems>{
@@ -169,7 +169,7 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
                 asdf = ShoppingItems(key, "", "", "", "", false, "")
             }
             databaseDao.updateItemDoneStatus(key, status)
-            databaseDao.insertItemCommand(ItemCommand(newId, asdf.name, asdf.quantity, asdf.unit, asdf.shoppingList, !asdf.done, asdf.shop, CommandType.UPDATE ))
+            databaseDao.insertItemCommand(ItemCommand(commandKey = UUID.randomUUID().toString(),  key, asdf.name, asdf.quantity, asdf.unit, asdf.shoppingList, !asdf.done, asdf.shop, CommandType.UPDATE ))
 
         }
 

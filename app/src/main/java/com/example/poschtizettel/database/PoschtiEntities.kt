@@ -5,6 +5,7 @@ import androidx.room.ForeignKey.CASCADE
 import com.example.poschtizettel.CommandType
 import org.jetbrains.annotations.NotNull
 import kotlinx.serialization.Serializable
+import java.util.*
 
 @Entity(tableName = "shopping_lists", indices = [Index(value = ["Name"])])
 data class ShoppingList(
@@ -45,6 +46,9 @@ data class ShoppingItems(
 @Entity(tableName = "item_commands", foreignKeys = arrayOf(ForeignKey(entity = ShoppingList::class, parentColumns = arrayOf("List_Key"), childColumns = arrayOf("list_key"), onDelete = CASCADE)))
 data class ItemCommand(
     @PrimaryKey(autoGenerate = false)
+    var commandKey:String = "UUID.randomUUID().toString()",
+
+    @ColumnInfo(name="itemKey")
     var itemKey:String = "",
 
     @ColumnInfo(name = "name")
