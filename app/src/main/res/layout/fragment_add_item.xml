@@ -74,7 +74,7 @@
                         android:id="@+id/text_input_item_quantity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="quanitity" />
+                        android:hint="quantity" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </ScrollView>
