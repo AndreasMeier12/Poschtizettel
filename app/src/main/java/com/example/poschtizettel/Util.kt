@@ -2,6 +2,8 @@ package com.example.poschtizettel
 
 import android.text.Html
 import android.text.Spanned
+import com.example.poschtizettel.database.ItemCommand
+import com.example.poschtizettel.database.ListCommand
 import com.example.poschtizettel.database.ShoppingItems
 import com.example.poschtizettel.database.ShoppingList
 
@@ -29,3 +31,4 @@ fun formatShoppingItem(item: ShoppingItems){
 fun formatShoppingItem(items: List<ShoppingItems>){
 
 }
+

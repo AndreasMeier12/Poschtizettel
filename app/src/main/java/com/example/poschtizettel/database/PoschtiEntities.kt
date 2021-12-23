@@ -4,6 +4,7 @@ import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 import com.example.poschtizettel.CommandType
 import org.jetbrains.annotations.NotNull
+import kotlinx.serialization.Serializable
 
 @Entity(tableName = "shopping_lists", indices = [Index(value = ["Name"])])
 data class ShoppingList(
@@ -74,6 +75,7 @@ data class ItemCommand(
 
 )
 
+@Serializable
 @Entity(tableName = "list_commands", indices = [Index(value = ["Name"])])
 data class ListCommand(
     @PrimaryKey(autoGenerate = false)
@@ -86,7 +88,9 @@ data class ListCommand(
     val type: CommandType,
     @ColumnInfo(name = "Timestamp")
     val timestamp: Long = System.currentTimeMillis()
-    ){}
+    ){
+
+}
 
 
 

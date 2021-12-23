@@ -108,6 +108,20 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
         databaseDao.insertListCommand(ListCommand(key, asdf.name, CommandType.DELETE))
     }
 
+    fun getAllItems(): List<ShoppingItems> {
+        var res: List<ShoppingItems> = listOf()
+        runBlocking {
+            res = async { getAllItemsForRealsies() }.await()
+        }
+        return res
+
+
+    }
+
+    suspend fun getAllItemsForRealsies() = withContext(Dispatchers.IO) {
+        databaseDao.getAllItems()
+    }
+
     fun deleteItem(key: String){
         runBlocking {
             deleteItemCoroutine(key)

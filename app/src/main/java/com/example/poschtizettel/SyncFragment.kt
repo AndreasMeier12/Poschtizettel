@@ -15,12 +15,13 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.poschtizettel.database.PoschtiDatabase
-import com.example.poschtizettel.database.ShoppingItems
-import com.example.poschtizettel.database.ShoppingList
+import com.example.poschtizettel.database.*
+import com.google.gson.GsonBuilder
 import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
+import java.nio.charset.Charset
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +31,7 @@ private const val TOKEN = "token"
 private const val URL = "url"
 private const val USERNAME = "username"
 private const val GET_URL = "/api/list"
-private const val NUKE_URL = ""
+private const val NUKE_URL = "/api/list"
 private const val REMOTE_URL = ""
 
 
@@ -68,6 +69,7 @@ class SyncFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sync, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -80,11 +82,12 @@ class SyncFragment : Fragment() {
 
 
         view.findViewById<Button>(R.id.button_apply).setOnClickListener {
-            val name = view.findViewById<AppCompatEditText>(R.id.editTextTextUsername).text.toString()
+            val name =
+                view.findViewById<AppCompatEditText>(R.id.editTextTextUsername).text.toString()
             val url = view.findViewById<AppCompatEditText>(R.id.editTextTextURL).text.toString()
             val token = view.findViewById<AppCompatEditText>(R.id.editTextTextToken).text.toString()
 
-            with(prefs!!.edit()){
+            with(prefs!!.edit()) {
                 putString(USERNAME, name)
                 putString(TOKEN, token)
                 putString(URL, url)
@@ -99,8 +102,11 @@ class SyncFragment : Fragment() {
             setToServer()
         }
 
-    }
+        view.findViewById<Button>(R.id.button_set_server_to_local).setOnClickListener {
+            setServer()
+        }
 
+    }
 
 
     companion object {
@@ -123,7 +129,7 @@ class SyncFragment : Fragment() {
             }
     }
 
-    fun prefill(view: View, prefs: SharedPreferences){
+    fun prefill(view: View, prefs: SharedPreferences) {
 
 
         val nameField = view.findViewById<AppCompatEditText>(R.id.editTextTextUsername)
@@ -136,7 +142,7 @@ class SyncFragment : Fragment() {
 
     }
 
-    fun setToServer(){
+    fun setToServer() {
         val prefs = activity?.getPreferences(Context.MODE_PRIVATE)
         if (prefs != null) {
             val textView = view!!.findViewById<AppCompatEditText>(R.id.editTextTextURL)
@@ -144,7 +150,7 @@ class SyncFragment : Fragment() {
 
 // Instantiate the RequestQueue.
             val queue = Volley.newRequestQueue(context)
-            val url =  prefs.getString(URL, "URL") + GET_URL
+            val url = prefs.getString(URL, "URL") + GET_URL
 
 // Request a string response from the provided URL.
             val stringRequest = StringRequest(Request.Method.GET, url,
@@ -155,16 +161,58 @@ class SyncFragment : Fragment() {
                 },
                 Response.ErrorListener {
 
-                        error -> textView.setText( "${error.toString()}")
+                        error ->
+                    textView.setText("${error.toString()}")
                 })
 
 // Add the request to the RequestQueue.
             queue.add(stringRequest)
 
 
-
         }
 
+    }
+
+
+
+    fun setServer() {
+        val queue = Volley.newRequestQueue(context)
+        val prefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        if (prefs != null) {
+
+            val url = prefs.getString(URL, "URL") + NUKE_URL
+            val lists = viewModel.getDasLists()
+            val listCommands = lists.map{ listToCommand(it)}
+            val items = viewModel.getAllItems()
+            val itemCommands : List<ItemCommand> =  items.map { itemToCommand(it) }
+            val a = GsonBuilder()
+            val asdf = a.create()
+            val serializedItems = itemCommands.map { asdf.toJson(it) }
+            val serializedLists = listCommands.map { asdf.toJson(it) }
+
+            val map = mapOf<String, List<Any>>(Pair("lists", serializedLists), Pair("items", serializedItems))
+
+            val requestBody = asdf.toJson(map)
+            val stringReq: StringRequest =
+                object : StringRequest(Method.POST, url,
+                    Response.Listener { response ->
+                        // response
+                        var strResp = response.toString()
+                        Log.d("API", strResp)
+                    },
+                    Response.ErrorListener { error ->
+                        Log.d("API", "error => $error")
+                    }
+                ) {
+                    override fun getBody(): ByteArray {
+                        return requestBody.toByteArray(Charset.defaultCharset())
+                    }
+                }
+            queue.add(stringReq)
+
+        } else{
+            Log.e("SyncFragment", "Could not post: ", )
+        }
     }
 
     fun parseJson(response: String) : Pair<List<ShoppingList>, List<ShoppingItems>>{
@@ -199,6 +247,14 @@ class SyncFragment : Fragment() {
         return Pair(outLists, outItems)
 
 
+    }
+
+    fun itemToCommand(a: ShoppingItems) : ItemCommand {
+        return ItemCommand(itemKey = a.item_key, name=a.name, quantity = a.quantity, unit=a.unit, shoppingList = a.shoppingList, done=a.done, shop=a.shop, type=CommandType.CREATE)
+    }
+
+    fun listToCommand(a: ShoppingList) : ListCommand {
+        return ListCommand(a.listKey,a.name, CommandType.CREATE)
     }
 
 
