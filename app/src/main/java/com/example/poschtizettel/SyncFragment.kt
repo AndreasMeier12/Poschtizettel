@@ -16,7 +16,11 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.poschtizettel.database.PoschtiDatabase
-import com.google.android.material.textfield.TextInputEditText
+import com.example.poschtizettel.database.ShoppingItems
+import com.example.poschtizettel.database.ShoppingList
+import org.json.JSONArray
+import org.json.JSONObject
+import org.json.JSONTokener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,7 +29,7 @@ private const val ARG_PARAM2 = "param2"
 private const val TOKEN = "token"
 private const val URL = "url"
 private const val USERNAME = "username"
-private const val GET_URL = "/api/lists"
+private const val GET_URL = "/api/list"
 private const val NUKE_URL = ""
 private const val REMOTE_URL = ""
 
@@ -92,10 +96,12 @@ class SyncFragment : Fragment() {
 
         }
         view.findViewById<Button>(R.id.button_set_remote).setOnClickListener{
-            getWhatever()
+            setToServer()
         }
 
     }
+
+
 
     companion object {
         /**
@@ -130,7 +136,7 @@ class SyncFragment : Fragment() {
 
     }
 
-    fun getWhatever(){
+    fun setToServer(){
         val prefs = activity?.getPreferences(Context.MODE_PRIVATE)
         if (prefs != null) {
             val textView = view!!.findViewById<AppCompatEditText>(R.id.editTextTextURL)
@@ -138,15 +144,19 @@ class SyncFragment : Fragment() {
 
 // Instantiate the RequestQueue.
             val queue = Volley.newRequestQueue(context)
-            val url = "https://www.google.com"
+            val url =  prefs.getString(URL, "URL") + GET_URL
 
 // Request a string response from the provided URL.
             val stringRequest = StringRequest(Request.Method.GET, url,
                 Response.Listener<String> { response ->
-                    // Display the first 500 characters of the response string.
-                    textView.setText("Response is: ${response.substring(0, 500)}) ")
+                    val temp = parseJson(response)
+                    viewModel.setContent(temp.first, temp.second)
+
                 },
-                Response.ErrorListener {  error -> textView.setText( "${error.toString()}") })
+                Response.ErrorListener {
+
+                        error -> textView.setText( "${error.toString()}")
+                })
 
 // Add the request to the RequestQueue.
             queue.add(stringRequest)
@@ -156,5 +166,40 @@ class SyncFragment : Fragment() {
         }
 
     }
+
+    fun parseJson(response: String) : Pair<List<ShoppingList>, List<ShoppingItems>>{
+        val jsonObject = JSONTokener(response).nextValue() as JSONObject
+        val items = jsonObject.get("items") as JSONArray
+        val lists = jsonObject.get("lists") as JSONArray
+        val outItems: ArrayList<ShoppingItems> = ArrayList()
+        val outLists: ArrayList<ShoppingList> = ArrayList()
+
+        for (i in 0 until items.length()) {
+            val cur = items.getJSONObject(i)
+
+            val newItem = ShoppingItems(
+                item_key = cur.getString("id"),
+                name = cur.getString("name"),
+                quantity = cur.getString("quantity"),
+                shoppingList = cur.getString("list_id"),
+                done = cur.getBoolean("done"),
+                shop = cur.getString("shop")
+            )
+            outItems.add(newItem)
+        }
+        for (i in 0 until lists.length()) {
+            val cur = lists.getJSONObject(i)
+
+            val newList = ShoppingList(
+                name = cur.getString("name"),
+                listKey = cur.getString("id")
+            )
+            outLists.add(newList)
+        }
+        return Pair(outLists, outItems)
+
+
+    }
+
 
 }

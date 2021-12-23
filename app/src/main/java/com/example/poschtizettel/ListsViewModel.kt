@@ -160,6 +160,26 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     }
 
+    fun setContent(lists: List<ShoppingList>, items: List<ShoppingItems>){
+        runBlocking {
+            setContentCoroutine(lists, items)
+        }
+
+
+    }
+
+    suspend private fun setContentCoroutine(lists: List<ShoppingList>, items: List<ShoppingItems>){
+        withContext(Dispatchers.IO){
+            databaseDao.nukeItems()
+            databaseDao.nukeLists()
+            databaseDao.insertLists(*lists.toTypedArray())
+            databaseDao.insertItems(*items.toTypedArray())
+
+
+        }
+
+
+    }
 
 
 

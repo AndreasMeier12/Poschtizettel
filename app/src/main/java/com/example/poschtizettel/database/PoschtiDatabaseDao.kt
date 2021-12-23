@@ -63,6 +63,16 @@ interface PoschtiDatabaseDao{
     @Query("UPDATE shopping_items SET done = :status where item_key=:key")
     fun updateItemDoneStatus(key: String, status: Boolean)
 
+    @Query("DELETE FROM shopping_lists")
+    fun nukeLists()
 
+    @Query("DELETE FROM shopping_items")
+    fun nukeItems()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertLists(vararg lists : ShoppingList)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertItems(vararg items: ShoppingItems)
 
 }
