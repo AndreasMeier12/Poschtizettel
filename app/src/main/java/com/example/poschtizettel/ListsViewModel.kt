@@ -59,6 +59,7 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
             val itemKey = UUID.randomUUID().toString()
             databaseDao.insertItem(
                 ShoppingItems(
+                    item_key=itemKey,
                     name = name,
                     shoppingList = listNum,
                     quantity = quantity,
