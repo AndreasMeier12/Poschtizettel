@@ -72,7 +72,7 @@ class AddItemFragment : Fragment() {
             if(name != ""){
                 viewModel.onAddItem(name = name, listNum = listkey, quantity = quantity, shop = shop)
 
-                val snackbar = Snackbar.make(it, "Item " + name + "added", 300)
+                val snackbar = Snackbar.make(it, "Item " + name + " added", 300)
                 snackbar.show()
             } else{
                 val snackbar = Snackbar.make(it, "Can't enter empty name", 600)
