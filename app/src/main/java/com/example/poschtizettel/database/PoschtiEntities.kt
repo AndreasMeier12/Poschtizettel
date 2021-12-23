@@ -83,6 +83,8 @@ data class ItemCommand(
 @Entity(tableName = "list_commands", indices = [Index(value = ["Name"])])
 data class ListCommand(
     @PrimaryKey(autoGenerate = false)
+    val commandKey: String = "",
+
     @ColumnInfo(name="List_Key")
     val listKey: String="",
     @ColumnInfo(name = "Name")

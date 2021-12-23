@@ -36,7 +36,7 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
         withContext(Dispatchers.IO) {
             val listKey = UUID.randomUUID().toString()
             databaseDao.insertList(ShoppingList(listKey,name = name))
-            databaseDao.insertListCommand(ListCommand(listKey = listKey, name=name, type=CommandType.CREATE))
+            databaseDao.insertListCommand(ListCommand(UUID.randomUUID().toString(), listKey = listKey, name=name, type=CommandType.CREATE))
         }
     }
 
@@ -106,7 +106,7 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
             asdf = ShoppingList(key, "")
         }
         databaseDao.deleteList(key)
-        databaseDao.insertListCommand(ListCommand(key, asdf.name, CommandType.DELETE))
+        databaseDao.insertListCommand(ListCommand(UUID.randomUUID().toString(),  key, asdf.name, CommandType.DELETE))
     }
 
     fun getAllItems(): List<ShoppingItems> {

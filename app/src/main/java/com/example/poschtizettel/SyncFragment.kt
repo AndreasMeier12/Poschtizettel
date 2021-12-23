@@ -255,7 +255,7 @@ class SyncFragment : Fragment() {
     }
 
     fun listToCommand(a: ShoppingList) : ListCommand {
-        return ListCommand(a.listKey,a.name, CommandType.CREATE)
+        return ListCommand(UUID.randomUUID().toString(), a.listKey,a.name, CommandType.CREATE)
     }
 
 
