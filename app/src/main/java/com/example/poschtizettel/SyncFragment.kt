@@ -156,9 +156,15 @@ class SyncFragment : Fragment() {
 // Instantiate the RequestQueue.
             val queue = Volley.newRequestQueue(context)
             val url = prefs.getString(URL, "URL") + GET_URL
+            val token = prefs.getString(TOKEN, "null")
+            val tokenVal = if (token != null) token else "null"
+            val a = GsonBuilder()
+            val asdf = a.create()
+            val map = mapOf<String, String>(Pair("token", tokenVal))
+            val requestBody = asdf.toJson(map)
 
 // Request a string response from the provided URL.
-            val stringRequest = StringRequest(Request.Method.GET, url,
+            val stringRequest = object : StringRequest(Request.Method.POST, url,
                 Response.Listener<String> { response ->
                     val temp = parseJson(response)
                     viewModel.setContent(temp.first, temp.second)
@@ -169,7 +175,11 @@ class SyncFragment : Fragment() {
 
                         error ->
                     textView.setText("${error.toString()}")
-                })
+                }){
+                override fun getBody(): ByteArray {
+                    return requestBody.toByteArray(Charset.defaultCharset())
+                }
+            }
 
 // Add the request to the RequestQueue.
             queue.add(stringRequest)
