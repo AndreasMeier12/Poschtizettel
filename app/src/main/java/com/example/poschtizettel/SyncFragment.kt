@@ -193,7 +193,15 @@ class SyncFragment : Fragment() {
             val serializedItems = itemCommands.map { asdf.toJson(it) }
             val serializedLists = listCommands.map { asdf.toJson(it) }
 
-            val map = mapOf<String, List<Any>>(Pair("lists", serializedLists), Pair("items", serializedItems))
+            var tokenVal = prefs.getString("token", "null")
+            if (tokenVal == null){
+                tokenVal = "null"
+            }
+
+
+            val map = fillMap(serializedLists, serializedItems, tokenVal)
+
+
 
             val requestBody = asdf.toJson(map)
             val stringReq: StringRequest =
@@ -219,6 +227,20 @@ class SyncFragment : Fragment() {
             Log.e("SyncFragment", "Could not post: ", )
         }
 
+
+
+    }
+
+    private fun fillMap(serializedLists: List<String>, serializedItems : List<String>, token: String?): Map<String, Any> {
+        if (token != null){
+            return mapOf<String, Any>(Pair("lists", serializedLists), Pair("items", serializedItems), Pair("token", token))
+        } else {
+            return mapOf<String, Any>(
+                Pair("lists", serializedLists),
+                Pair("items", serializedItems),
+                Pair("token", "null")
+            )
+        }
 
 
     }
