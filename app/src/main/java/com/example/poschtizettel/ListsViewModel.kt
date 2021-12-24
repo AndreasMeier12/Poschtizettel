@@ -209,6 +209,36 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
         }
     }
 
+    fun getItemCommands(): List<ItemCommand>{
+        var res: List<ItemCommand> = ArrayList();
+
+        runBlocking {
+            res =  async { getItemCommandsCoroutine() }.await()
+        }
+        return res
+
+    }
+
+    private suspend fun getItemCommandsCoroutine(): List<ItemCommand> =
+        withContext(Dispatchers.IO) {
+            databaseDao.getAllItemCommands()
+        }
+
+
+    fun getListCommands(): List<ListCommand> {
+        var res: List<ListCommand> = listOf()
+        runBlocking {
+            res = async { getListCommandsCoroutine() }.await()
+        }
+        return res
+    }
+
+    private suspend fun getListCommandsCoroutine() = withContext(Dispatchers.IO) {
+        databaseDao.getAllListCommands()
+    }
+
+
+
 
 
 }

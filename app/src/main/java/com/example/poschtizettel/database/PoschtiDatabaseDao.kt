@@ -76,11 +76,18 @@ interface PoschtiDatabaseDao{
     @Query("DELETE FROM list_commands")
     fun nukeListCommands()
 
+    @Query("SELECT * from item_commands")
+    fun getAllItemCommands(): List<ItemCommand>
+
+    @Query("SELECT * from list_commands")
+    fun getAllListCommands(): List<ListCommand>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLists(vararg lists : ShoppingList)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertItems(vararg items: ShoppingItems)
+
 
 }

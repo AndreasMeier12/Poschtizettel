@@ -107,6 +107,10 @@ class SyncFragment : Fragment() {
             setServer()
         }
 
+        view.findViewById<Button>(R.id.button_merge).setOnClickListener {
+            sync()
+        }
+
     }
 
 
@@ -172,6 +176,50 @@ class SyncFragment : Fragment() {
 
 
         }
+
+    }
+
+    fun sync(){
+        val queue = Volley.newRequestQueue(context)
+        val prefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        if (prefs != null) {
+
+            val url = prefs.getString(URL, "URL") + NUKE_URL
+            val listCommands = viewModel.getListCommands()
+            val itemCommands = viewModel.getItemCommands()
+
+            val a = GsonBuilder()
+            val asdf = a.create()
+            val serializedItems = itemCommands.map { asdf.toJson(it) }
+            val serializedLists = listCommands.map { asdf.toJson(it) }
+
+            val map = mapOf<String, List<Any>>(Pair("lists", serializedLists), Pair("items", serializedItems))
+
+            val requestBody = asdf.toJson(map)
+            val stringReq: StringRequest =
+                object : StringRequest(Method.PATCH, url,
+                    Response.Listener { response ->
+                        // response
+                        var strResp = response.toString()
+                        val res = parseJson(response)
+                        viewModel.setContent(res.first, res.second)
+                        viewModel.clearCommands()
+                    },
+                    Response.ErrorListener { error ->
+                        Log.d("API", "error => $error")
+                    }
+                ) {
+                    override fun getBody(): ByteArray {
+                        return requestBody.toByteArray(Charset.defaultCharset())
+                    }
+                }
+            queue.add(stringReq)
+
+        } else{
+            Log.e("SyncFragment", "Could not post: ", )
+        }
+
+
 
     }
 
