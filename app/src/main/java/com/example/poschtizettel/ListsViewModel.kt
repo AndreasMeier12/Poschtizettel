@@ -196,6 +196,19 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     }
 
+    fun clearCommands(){
+        runBlocking {
+            clearCommandsCoroutine()
+        }
+    }
+
+    suspend fun clearCommandsCoroutine(){
+        withContext(Dispatchers.IO){
+            databaseDao.nukeItemCommands()
+            databaseDao.nukeListCommands()
+        }
+    }
+
 
 
 }

@@ -158,6 +158,7 @@ class SyncFragment : Fragment() {
                 Response.Listener<String> { response ->
                     val temp = parseJson(response)
                     viewModel.setContent(temp.first, temp.second)
+                    viewModel.clearCommands()
 
                 },
                 Response.ErrorListener {
@@ -199,7 +200,9 @@ class SyncFragment : Fragment() {
                     Response.Listener { response ->
                         // response
                         var strResp = response.toString()
-                        Log.d("API", strResp)
+                        val res = parseJson(response)
+                        viewModel.setContent(res.first, res.second)
+                        viewModel.clearCommands()
                     },
                     Response.ErrorListener { error ->
                         Log.d("API", "error => $error")
