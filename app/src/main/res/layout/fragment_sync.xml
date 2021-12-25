@@ -5,7 +5,8 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SyncFragment">
+    tools:context=".SyncFragment"
+    android:background="#eee8d5 ">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -42,38 +43,52 @@
         android:id="@+id/button_apply"
         android:layout_width="83dp"
         android:layout_height="54dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="68dp"
+        android:background="#93a1a1"
         android:text="@string/apply"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.134"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextURL" />
 
     <Button
         android:id="@+id/button_merge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="80dp"
         android:text="@string/merge"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_apply"
-        tools:layout_editor_absoluteX="159dp" />
+        android:background="#93a1a1"/>
 
     <Button
         android:id="@+id/button_set_remote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="340dp"
         android:text="@string/set_to_remote"
-        app:layout_constraintTop_toBottomOf="@+id/mergee"
-        tools:layout_editor_absoluteX="162dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintStart_toEndOf="@+id/button_merge"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#93a1a1"/>
 
     <Button
         android:id="@+id/button_set_server_to_local"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
+        android:background="#93a1a1"
         android:text="@string/set_to_local"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_set_remote"
-        tools:layout_editor_absoluteX="163dp" />
+        app:layout_constraintVertical_bias="0.047" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
