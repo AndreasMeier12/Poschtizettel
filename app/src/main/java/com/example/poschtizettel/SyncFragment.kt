@@ -276,7 +276,7 @@ class SyncFragment : Fragment() {
 
             val requestBody = asdf.toJson(map)
             val stringReq: StringRequest =
-                object : StringRequest(Method.POST, url,
+                object : StringRequest(Method.PUT, url,
                     Response.Listener { response ->
                         // response
                         var strResp = response.toString()
