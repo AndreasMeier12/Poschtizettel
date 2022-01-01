@@ -157,7 +157,7 @@ class SyncFragment : Fragment() {
             val queue = Volley.newRequestQueue(context)
             val url = prefs.getString(URL, "URL") + GET_URL
             val token = prefs.getString(TOKEN, "null")
-            val tokenVal = if (token != null) token else "null"
+            val tokenVal = getToken()
             val a = GsonBuilder()
             val asdf = a.create()
             val map = mapOf<String, String>(Pair("token", tokenVal))
@@ -202,11 +202,9 @@ class SyncFragment : Fragment() {
             val asdf = a.create()
             val serializedItems = itemCommands.map { asdf.toJson(it) }
             val serializedLists = listCommands.map { asdf.toJson(it) }
+            val tokenVal = getToken();
 
-            var tokenVal = prefs.getString("token", "null")
-            if (tokenVal == null){
-                tokenVal = "null"
-            }
+
 
 
             val map = fillMap(serializedLists, serializedItems, tokenVal)
@@ -272,7 +270,7 @@ class SyncFragment : Fragment() {
             val serializedItems = itemCommands.map { asdf.toJson(it) }
             val serializedLists = listCommands.map { asdf.toJson(it) }
 
-            val map = mapOf<String, List<Any>>(Pair("lists", serializedLists), Pair("items", serializedItems))
+            val map = mapOf<String, Any>(Pair("lists", serializedLists), Pair("items", serializedItems), Pair("token", getToken()))
 
             val requestBody = asdf.toJson(map)
             val stringReq: StringRequest =
@@ -339,6 +337,17 @@ class SyncFragment : Fragment() {
 
     fun listToCommand(a: ShoppingList) : ListCommand {
         return ListCommand(UUID.randomUUID().toString(), a.listKey,a.name, CommandType.CREATE)
+    }
+
+    private fun getToken() : String {
+        val prefs = activity?.getPreferences(Context.MODE_PRIVATE)
+
+        var tokenVal = prefs!!.getString("token", "null")
+        if (tokenVal == null){
+            tokenVal = "null"
+        }
+        return tokenVal
+
     }
 
 
