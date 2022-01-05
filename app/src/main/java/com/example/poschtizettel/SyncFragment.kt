@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.Request
@@ -97,6 +98,7 @@ class SyncFragment : Fragment() {
 
             }
             Log.i("ApplySettings", "applySettings: ${name}. ${url}, ${token}")
+            Toast.makeText(context, "Done!", 3).show()
 
         }
         view.findViewById<Button>(R.id.button_set_remote).setOnClickListener{
@@ -169,11 +171,14 @@ class SyncFragment : Fragment() {
                     val temp = parseJson(response)
                     viewModel.setContent(temp.first, temp.second)
                     viewModel.clearCommands()
+                    Toast.makeText(context, "Set to server", 3).show()
+
 
                 },
                 Response.ErrorListener {
 
                         error ->
+                    Toast.makeText(context, error.toString(), 3).show()
                     textView.setText("${error.toString()}")
                 }){
                 override fun getBody(): ByteArray {
@@ -216,12 +221,22 @@ class SyncFragment : Fragment() {
                 object : StringRequest(Method.PATCH, url,
                     Response.Listener { response ->
                         // response
-                        var strResp = response.toString()
-                        val res = parseJson(response)
-                        viewModel.setContent(res.first, res.second)
-                        viewModel.clearCommands()
+                        try {
+                            var strResp = response.toString()
+                            val res = parseJson(response)
+                            viewModel.setContent(res.first, res.second)
+                            viewModel.clearCommands()
+                            Toast.makeText(context, "Synced successfully", 3).show()
+
+                        } catch (error: ClassCastException){
+                            Toast.makeText(context, error.toString(), 3).show()
+                            Log.d("API", "error => $error")
+                        }
+
+
                     },
                     Response.ErrorListener { error ->
+                        Toast.makeText(context, error.toString(), 3).show()
                         Log.d("API", "error => $error")
                     }
                 ) {
@@ -277,12 +292,16 @@ class SyncFragment : Fragment() {
                 object : StringRequest(Method.PUT, url,
                     Response.Listener { response ->
                         // response
+
                         var strResp = response.toString()
                         val res = parseJson(response)
                         viewModel.setContent(res.first, res.second)
                         viewModel.clearCommands()
+                        Toast.makeText(context, "Server set successfully", 3).show()
+
                     },
                     Response.ErrorListener { error ->
+                        Toast.makeText(context, error.toString(), 3).show()
                         Log.d("API", "error => $error")
                     }
                 ) {
