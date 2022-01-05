@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder
 import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
+import java.lang.Exception
 import java.nio.charset.Charset
 import java.util.*
 import kotlin.collections.ArrayList
@@ -168,9 +169,7 @@ class SyncFragment : Fragment() {
 // Request a string response from the provided URL.
             val stringRequest = object : StringRequest(Request.Method.POST, url,
                 Response.Listener<String> { response ->
-                    val temp = parseJson(response)
-                    viewModel.setContent(temp.first, temp.second)
-                    viewModel.clearCommands()
+                    handleResponse(response)
                     Toast.makeText(context, "Set to server", 3).show()
 
 
@@ -221,18 +220,8 @@ class SyncFragment : Fragment() {
                 object : StringRequest(Method.PATCH, url,
                     Response.Listener { response ->
                         // response
-                        try {
-                            var strResp = response.toString()
-                            val res = parseJson(response)
-                            viewModel.setContent(res.first, res.second)
-                            viewModel.clearCommands()
+                            handleResponse(response)
                             Toast.makeText(context, "Synced successfully", 3).show()
-
-                        } catch (error: ClassCastException){
-                            Toast.makeText(context, error.toString(), 3).show()
-                            Log.d("API", "error => $error")
-                        }
-
 
                     },
                     Response.ErrorListener { error ->
@@ -292,11 +281,8 @@ class SyncFragment : Fragment() {
                 object : StringRequest(Method.PUT, url,
                     Response.Listener { response ->
                         // response
+                        handleResponse(response)
 
-                        var strResp = response.toString()
-                        val res = parseJson(response)
-                        viewModel.setContent(res.first, res.second)
-                        viewModel.clearCommands()
                         Toast.makeText(context, "Server set successfully", 3).show()
 
                     },
@@ -349,6 +335,22 @@ class SyncFragment : Fragment() {
 
 
     }
+
+    fun handleResponse(response: String){
+        try {
+            val res = parseJson(response)
+            viewModel.setContent(res.first, res.second)
+            viewModel.clearCommands()
+        } catch (error: Exception) {
+            Toast.makeText(context, error.toString(), 3).show()
+            Log.d("API", "error => $error")
+
+        }
+
+
+    }
+
+    fun handleFailure(){}
 
     fun itemToCommand(a: ShoppingItems) : ItemCommand {
         return ItemCommand(commandKey = UUID.randomUUID().toString() , itemKey = a.item_key, name=a.name, quantity = a.quantity, unit=a.unit, shoppingList = a.shoppingList, done=a.done, shop=a.shop, type=CommandType.CREATE)
