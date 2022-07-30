@@ -102,13 +102,7 @@ class SyncFragment : Fragment() {
             Toast.makeText(context, "Done!", 3).show()
 
         }
-        view.findViewById<Button>(R.id.button_set_remote).setOnClickListener{
-            setToServer()
-        }
 
-        view.findViewById<Button>(R.id.button_set_server_to_local).setOnClickListener {
-            setServer()
-        }
 
         view.findViewById<Button>(R.id.button_merge).setOnClickListener {
             sync()

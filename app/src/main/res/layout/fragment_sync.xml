@@ -63,32 +63,5 @@
         app:layout_constraintTop_toBottomOf="@+id/button_apply"
         android:background="#93a1a1"/>
 
-    <Button
-        android:id="@+id/button_set_remote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="340dp"
-        android:text="@string/set_to_remote"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.183"
-        app:layout_constraintStart_toEndOf="@+id/button_merge"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="#93a1a1"/>
-
-    <Button
-        android:id="@+id/button_set_server_to_local"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:background="#93a1a1"
-        android:text="@string/set_to_local"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_set_remote"
-        app:layout_constraintVertical_bias="0.047" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
