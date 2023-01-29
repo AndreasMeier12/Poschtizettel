@@ -252,50 +252,6 @@ class SyncFragment : Fragment() {
     }
 
 
-
-    fun setServer() {
-        val queue = Volley.newRequestQueue(context)
-        val prefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        if (prefs != null) {
-
-            val url = prefs.getString(URL, "URL") + NUKE_URL
-            val lists = viewModel.getDasLists()
-            val listCommands = lists.map{ listToCommand(it)}
-            val items = viewModel.getAllItems()
-            val itemCommands : List<ItemCommand> =  items.map { itemToCommand(it) }
-            val a = GsonBuilder()
-            val asdf = a.create()
-            val serializedItems = itemCommands.map { asdf.toJson(it) }
-            val serializedLists = listCommands.map { asdf.toJson(it) }
-
-            val map = mapOf<String, Any>(Pair("lists", serializedLists), Pair("items", serializedItems), Pair("token", getToken()))
-
-            val requestBody = asdf.toJson(map)
-            val stringReq: StringRequest =
-                object : StringRequest(Method.PUT, url,
-                    Response.Listener { response ->
-                        // response
-                        handleResponse(response)
-
-                        Toast.makeText(context, "Server set successfully", 3).show()
-
-                    },
-                    Response.ErrorListener { error ->
-                        Toast.makeText(context, error.toString(), 3).show()
-                        Log.d("API", "error => $error")
-                    }
-                ) {
-                    override fun getBody(): ByteArray {
-                        return requestBody.toByteArray(Charset.defaultCharset())
-                    }
-                }
-            queue.add(stringReq)
-
-        } else{
-            Log.e("SyncFragment", "Could not post: ", )
-        }
-    }
-
     fun parseJson(response: String) : Pair<List<ShoppingList>, List<ShoppingItems>>{
         val jsonObject = JSONTokener(response).nextValue() as JSONObject
         val items = jsonObject.get("items") as JSONArray
@@ -346,13 +302,6 @@ class SyncFragment : Fragment() {
 
     fun handleFailure(){}
 
-    fun itemToCommand(a: ShoppingItems) : ItemCommand {
-        return ItemCommand(commandKey = UUID.randomUUID().toString() , itemKey = a.item_key, name=a.name, quantity = a.quantity, unit=a.unit, shoppingList = a.shoppingList, done=a.done, shop=a.shop, type=CommandType.CREATE)
-    }
-
-    fun listToCommand(a: ShoppingList) : ListCommand {
-        return ListCommand(UUID.randomUUID().toString(), a.listKey,a.name, CommandType.CREATE)
-    }
 
     private fun getToken() : String {
         val prefs = activity?.getPreferences(Context.MODE_PRIVATE)
