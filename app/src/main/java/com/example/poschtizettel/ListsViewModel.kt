@@ -185,27 +185,7 @@ class ListsViewModel(val databaseDao: PoschtiDatabaseDao, application: Applicati
 
     suspend private fun setContentCoroutine(lists: List<ShoppingList>, items: List<ShoppingItems>){
         withContext(Dispatchers.IO){
-            databaseDao.nukeItems()
-            databaseDao.nukeLists()
-            databaseDao.insertLists(*lists.toTypedArray())
-            databaseDao.insertItems(*items.toTypedArray())
-
-
-        }
-
-
-    }
-
-    fun clearCommands(){
-        runBlocking {
-            clearCommandsCoroutine()
-        }
-    }
-
-    suspend fun clearCommandsCoroutine(){
-        withContext(Dispatchers.IO){
-            databaseDao.nukeItemCommands()
-            databaseDao.nukeListCommands()
+            databaseDao.setState(lists, items)
         }
     }
 

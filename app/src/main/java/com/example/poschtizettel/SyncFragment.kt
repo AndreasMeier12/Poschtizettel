@@ -290,7 +290,6 @@ class SyncFragment : Fragment() {
         try {
             val res = parseJson(response)
             viewModel.setContent(res.first, res.second)
-            viewModel.clearCommands()
         } catch (error: Exception) {
             Toast.makeText(context, error.toString(), 3).show()
             Log.e("API", "error => $error")
