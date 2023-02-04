@@ -293,7 +293,7 @@ class SyncFragment : Fragment() {
             viewModel.clearCommands()
         } catch (error: Exception) {
             Toast.makeText(context, error.toString(), 3).show()
-            Log.d("API", "error => $error")
+            Log.e("API", "error => $error")
 
         }
 
