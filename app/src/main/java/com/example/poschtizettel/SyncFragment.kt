@@ -226,6 +226,10 @@ class SyncFragment : Fragment() {
                     override fun getBody(): ByteArray {
                         return requestBody.toByteArray(Charset.defaultCharset())
                     }
+
+                    override fun getBodyContentType(): String {
+                        return "application/json"
+                    }
                 }
             queue.add(stringReq)
 
